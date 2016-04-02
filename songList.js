@@ -43,20 +43,32 @@ MongoClient.connect(fullMongoUrl)
         
         exports.addParty = function(){
             return partyCollection.insertOne({"_id":"0001", "partyId":"Party1", "partyName":"Christmas Party", "createdBy":"Sunny", "playList":[{"videoName":"Merry Christmas Every Body","url":"https://www.youtube.com/watch?v=jx6DzaiV66Y","createdBy":"Sunny","watched":true}], "config":{"allowAnonymous": true, "maxLimit": 100,"allowComment": true}});
-        }
+        };
         
         exports.addSongbyUrl = function(partyID, Url){
+            // var songList = partyCollection.find({_id:partyId}).then(function(party){
+            //     return party[0].playList;
+            // });
             
-            var playList = [{"videoName":"Merry Christmas Every Body",
-                            "url":Url,
-                            "createdBy":"Sunny",
-                            "watched":true}];
             
-            return partyCollection.updateOne({ _id: partyID}, 
-                    { $set: {playList: playList} }).then(function() {
-        	return exports.findPartyByPartyID(partyID);
-        	});
-        }
+            
+            var newSong = {"videoName":"Merry Christmas Every Body",
+                           "url":Url,
+                           "createdBy":"Sunny",
+                           "watched":true};
+            var newSongList;
+            return exports.findPartyByPartyID(partyID).then(function(party) {
+                party.playList.push(newSong);
+                newSongList = party.playList;
+                return newSongList;
+        	}).then(function(songList){
+                return partyCollection.updateOne({ _id: partyID}, 
+                    { $set: {playList: songList} }).then(function(){
+                        console.log(songList);
+                        // return exports.findPartyByPartyID(partyID);
+                    }); 
+            });
+        };
         
         
         exports.findPartyByPartyID = function(partyID){ 
@@ -67,7 +79,7 @@ MongoClient.connect(fullMongoUrl)
         			return listOfParty[0];
         		}
         	});
-        }
+        };
         
         
     });
