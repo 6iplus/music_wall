@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><%=partyId%></title>
+</head>
+<body>
+party	
+
+<div id="messages">
+
+</div>
+
+<iframe width="960" height="720" id="music_url" src="" frameborder="0" allowfullscreen></iframe>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+ <script src="/socket.io/socket.io.js"></script>
+      <script>
+
+
+
+          var socket = io();
+
+          // let's assume that the client page, once rendered, knows what room it wants to join
+          var room = "<%=partyId%>";
+          socket.on('connect', function() {
+              // Connected, let's sign-up for to receive messages for this room
+              socket.emit('room', room);
+          });
+          socket.on('message', function(data) {
+              console.log('Incoming message:', data);
+          });
+
+          socket.on('chat message', function(msg){
+          console.log(msg);
+              $('#messages').append($('<li>').text(msg.data.songName + " "+  msg.data.url));
+              $('#music_url').attr('src', msg.data.url+'?autoplay=1');
+          });
+      </script>
+</body>
+</html>
