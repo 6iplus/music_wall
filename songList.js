@@ -1,4 +1,15 @@
 'use strict';
+
+var MongoClient = require('mongodb').MongoClient,
+	settings = require('./config.js'),
+	Guid = require('Guid');
+	
+
+
+var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
+var exports = module.exports = {};
+
+
 var data=[];//partid : { playlist}
 //var data= {partyId:[], partyId2:[]};  return showSucc(data[partyId])
 //datq=[][{}] 
@@ -13,7 +24,56 @@ function showSucc(data){
 function showError(msg){
     return {status: "error", "msg": msg};
 }
-module.exports = {
+
+// {"_id":"81fbbb11-2b10-1457-933b-6af2487d7122", "partyId":"zxco23", "partyName":"Christmas Party", "createdBy":"Sunny", "playList":[{"videoName":"Merry Christmas Every Body,"url":"https://www.youtube.com/watch?v=jx6DzaiV66Y","createdBy":"Sunny","watched":true}] "config":{"allowAnonymous": true "maxLimit": 100,"allowComment": true}
+
+
+
+MongoClient.connect(fullMongoUrl)
+    .then(function(db) {
+        var partyCollection = db.collection("party");
+        
+        exports.createUser = function(username, encryptedPassword) {
+        	emptyProfile = {firstName: "", lastName: "", hobby: "", petName: ""};
+        	//console.log("good");
+        	return userCollection.insertOne({ _id: Guid.create().toString(), username: username, 
+                encryptedPassword: encryptedPassword, currentSessionId: "", profile: emptyProfile });
+        };
+        
+        
+        exports.addParty = function(){
+            return partyCollection.insertOne({"_id":"0001", "partyId":"Party1", "partyName":"Christmas Party", "createdBy":"Sunny", "playList":[{"videoName":"Merry Christmas Every Body","url":"https://www.youtube.com/watch?v=jx6DzaiV66Y","createdBy":"Sunny","watched":true}], "config":{"allowAnonymous": true, "maxLimit": 100,"allowComment": true}});
+        }
+        
+        exports.addSongbyUrl = function(partyID, Url){
+            
+            var playList = [{"videoName":"Merry Christmas Every Body",
+                            "url":Url,
+                            "createdBy":"Sunny",
+                            "watched":true}];
+            
+            return partyCollection.updateOne({ _id: partyID}, 
+                    { $set: {playList: playList} }).then(function() {
+        	return exports.findPartyByPartyID(partyID);
+        	});
+        }
+        
+        
+        exports.findPartyByPartyID = function(partyID){ 
+            return partyCollection.find({_id: partyID}).limit(1).toArray().then(function(listOfParty) {
+        		if(listOfParty.length === 0) {
+        			return Promise.reject("User doesn't exist!");
+        		} else {
+        			return listOfParty[0];
+        		}
+        	});
+        }
+        
+        
+    });
+
+
+exports.exports = {
 	get: function (partyId, id) {
         if(!partyId || !id || data[partyId] == undefined){
             throw Error("error get id :"+ id+ "or partyid:"+ partyId);

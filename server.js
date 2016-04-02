@@ -10,9 +10,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/assets', express.static('static'));
 var partyId = "party1";
-app.get("/", function (req,res) {
-	res.sendFile("./pages/index.html", {root:__dirname});
-});
 
 app.get("/party/:partyId", function (req,res) {
     
@@ -42,6 +39,22 @@ io.on('connection', function(socket){
 //socket.io end
 
 
+
+app.get("/", function(request, respond){
+    
+    
+    
+    mySongList.getAllComments().then(function (commentList) {
+        response.render("pages/home", { error: null, comments: commentList });
+    }, function (errorMessage) {
+        response.status(500).json({ error: errorMessage });
+    });
+    respond.render("pages/songList");
+});
+
+app.post("/party/:partyId", function(request, respond) {
+    
+});
 
 
 app.get("/party/songList/:id", function (req,res) {
