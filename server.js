@@ -15,10 +15,17 @@ app.use('/assets', express.static('static'));
 app.use(cookieParser());
 
 
-app.use(function (request, response, next) {
-console.log("The request has all the following cookies:");
-    console.log(request.cookies);   
-    next();
+var partyId = "party1";
+
+app.get("/", function (req,res) {
+	res.sendFile("./pages/index.html", {root:__dirname});
+});
+app.get("/partyConfig", function (req,res) {
+	res.sendFile("./pages/partyConfig.html", {root:__dirname});
+});
+
+app.get("/songList", function (req,res) {
+	res.sendFile("./pages/songList.html", {root:__dirname});
 });
 
 

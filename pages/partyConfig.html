@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,38 +19,40 @@
         margin-left: 100px;
         }
     </style>
-
 </head>
 <body>
-    
 <div class="container">
     <div class="ex">
-        <h1 id="header"></h1>
-    
-    
-    <h2 class="text-center">Welcome to music wall</h2>
+    <h1 id="header"></h1>
+    <h2 class="text-center">Let's start</h2>
     </div>
-    <!--<p class="ex">adasjdnakjsndkajsndkjanskdjnasd</p>-->
     <main>
-        <!-- Your main content will go here! -->
         <section>
-            <!--<h2>My To-Do List API</h2>-->
-            <p class="text-center">Using the music-wall to make your party amazing</p>
-        </section>
-    </main>
-    <div id="background">
-        <img >
+            <div id="background">
+                <img >
         
-    </div>
-    <div id="createParty">
-        <div class="form-horizontal" action="/createParty" method="GET">
-            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                    <input type='button' id="create" class="btn btn-primary" value="Create Party">
-                </div>
             </div>
-        </div> 
-    </div>
+        </section>
+        <section>
+            <!--<div class="col-md-12 well">-->
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <!--<label class="col-sm-2 control-label">party name</label>-->
+                        <div class="col-sm-12">
+                            <input id="partyName" type="text" class="form-control" placeholder="input party name...">
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                        <div  class="btn-group" role="group">
+                            <input type='button' id="create" class="btn btn-primary" value="Create a party now!">
+                        </div>
+                    </div>
+                </form>
+            <!--</div>-->
+        </section>
+        <!-- Your main content will go here! -->
+    </main>
+
 </div>
 
 <div class="ex">
@@ -70,6 +73,5 @@
 <script src="../assets/js/bootstrap.min.js"></script>
 <script src="../assets/js/underscore-min.js"></script>
 <script src="../assets/js/app.js"></script>
-
 </body>
 </html>
