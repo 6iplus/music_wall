@@ -10,8 +10,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/assets', express.static('static'));
 var partyId = "party1";
+
 app.get("/", function (req,res) {
 	res.sendFile("./pages/index.html", {root:__dirname});
+});
+app.get("/partyConfig", function (req,res) {
+	res.sendFile("./pages/partyConfig.html", {root:__dirname});
+});
+
+app.get("/songList", function (req,res) {
+	res.sendFile("./pages/songList.html", {root:__dirname});
 });
 
 app.get("/party/:partyId", function (req,res) {

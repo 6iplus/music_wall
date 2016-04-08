@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <% include ../partials/head %>
+</head>
+<body>
+<div class="container">
+    <h1 id="header"></h1>
+    <h2 class="text-center">Welcome to music wall</h2>
+    <main>
+        <!-- Your main content will go here! -->
+        <section>
+            <!--<h2>My To-Do List API</h2>-->
+            <p class="text-center">Using the music-wall to make your party amazing</p>
+        </section>
+    </main>
+    <div id="background">
+        <img >
+        
+    </div>
+    <div id="createParty">
+        <form class="form-horizontal" action="/createParty" method="GET">
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="text-center" role="group">
+                    <input type='button' id="create" class="btn btn-primary" value="Create Party">
+                </div>
+            </div>
+        </form> 
+    </div>
+</div>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- jQuery fallback -->
+<script>
+    if (!window.jQuery) {
+        document.write('<script src="../assets/js/jquery-1.12.1.js"><\/script>');
+    }
+</script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+<% include ../partials/scripts %>
+</body>
+</html>
