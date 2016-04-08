@@ -7,6 +7,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Guid = require('Guid');
 var cookieParser = require('cookie-parser');
+var partyData = require('./partydata.js');
 
 app.set('view engine','ejs');
 app.use(bodyParser.json());
@@ -252,21 +253,48 @@ app.post("/party", function(req,res) {
 	res.json(result);
 });
 
-
-app.post("/party/songList", function(req,res) {
-	var  songName = req.body.songName,
-		 url = req.body.url,
-		 owner = 'Sunny';
-	var result = mySongList.create(partyId,songName,url,owner);
-    io.in(partyId).emit('chat message', result);
-	res.json(result);
+//index
+app.get("/", function (req,res) {
+	res.render("pages/index", {Inf: "Welcome!"});
 });
 
-app.delete("/party/songList/:id", function (req,res) {
-	var id = req.params.id;
-	var result = mySongList.delete(partyId, id);
-	res.json(result);
+//redirect to partyconfig
+app.get("/createparty", function(request, response){
+	if(!response.locals.user||response.locals.user==undefined){ 
+	response.render("pages/index", {Inf: "please log in first!"});
+}else{
+	response.render("pages/partyconfig", {Inf: "please input your party information"});
+}
+
 });
+
+//create party
+app.post("/createparty", function(request, response){
+if(!response.locals.user||response.locals.user==undefined){ 
+	response.render("pages/index", {Inf: "please log in first!"});
+}else{
+	var partyId = request.body.partyId;
+	var partyName = request.body.partyName;
+	if(!response.locals.user||response.locals.user==undefined){ 
+	var createdBy = "unknown user";
+}
+else{
+	var createdBy = response.locals.user.username;
+}
+	var playList = {};
+	var config = {};
+	partyData.getPartyById(partyId).then(function(partyList){
+if(partyList.length>0){
+response.render("pages/partyconfig", {Inf: "party id existed"});
+}else{
+	partyData.createParty(partyId, partyName, createdBy, playList, config);
+	response.render("pages/party/:partyId", {partyId: partyId});
+}
+});
+}
+	
+	});
+
 
 
 http.listen(3000, function () {

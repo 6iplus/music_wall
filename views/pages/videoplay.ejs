@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Music Wall</title>
+<script>var partyId_l = <%=partyId %></script>
+    <% include ../partials/head %>
+</head>
+<body>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<div id="my_qr"></div>
+<input type="hidden" name="partyId" id="partyId" value=<%=partyId%> />
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+	<script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+	    <script>
+        if (!window.jQuery) { document.write('<script src="/assets/js/jquery.js"><\/script>'); }
+    </script>
+
+	    <script src="/assets/js/myQrcode.js"></script>
+<% include ../partials/scripts %>
+
+</body>
+</html>
