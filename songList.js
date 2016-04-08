@@ -71,10 +71,10 @@ MongoClient.connect(fullMongoUrl)
         };
         
         
-        exports.findPartyByPartyID = function(partyID){ 
-            return partyCollection.find({_id: partyID}).limit(1).toArray().then(function(listOfParty) {
+        exports.findPartyByPartyID = function(partyId){ 
+            return partyCollection.find({partyId: partyId}).limit(1).toArray().then(function(listOfParty) {
         		if(listOfParty.length === 0) {
-        			return Promise.reject("User doesn't exist!");
+        			return Promise.reject("Party doesn't exist!");
         		} else {
         			return listOfParty[0];
         		}

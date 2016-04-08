@@ -11,16 +11,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/assets', express.static('static'));
 var partyId = "party1";
 
-// app.get("/party/:partyId", function (req,res) {
-    
-//     var pid = req.params.partyId;
-//     //check if the partyId in partList
-//     //if not show error
-    
-    
-    
-// 	res.render('pages/party',{partyId: pid});
-// });
+ app.get("/party/:partyId", function (req,res) {
+    var partyId = req.params.partyId;
+    //check if the partyId in partList
+    //if not show error
+    mySongList.findPartyByPartyID(partyId).then(function(party){
+        console.log(party);
+	    res.render('pages/party',{party: party});
+    }, function(error){
+        console.log(error);
+    });
+});
 
 //socket.io start
 
