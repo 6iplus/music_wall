@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+        </header>
+        <main>
+            <!-- Let's start writing content! -->  
+                <h2>Login</h2>
+                <hr />
+                <form id="form1" action="/login" method="POST">
+                    <div class="form-group">
+                        <label for="login">Login</label>
+                        <div>
+                                <input class= "username" name='loginname' placeholder="Letter and number only" />
+                        </div>
+                        <div>
+                                <input class= "password" name='loginpw' placeholder="Letter and number only" />
+                        </div>
+                    </div>
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary" id="button1">Submit</button>
+                </form>
+            
+                <h2>Register</h2>
+                <hr />
+                <form id="form2" action="/register" method="POST">
+                    <div class="form-group">
+                        <label for="register">Register</label>
+                        <div>
+                                <input class= "username" name='username' placeholder="Letter and number only" />
+                        </div>
+                        <div>
+                                <input class= "password" name='password' placeholder="Letter and number only" />
+                        </div>
+                    </div>
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary" id="button2">Submit</button>
+                </form>
+        </main>
+    </div>
+
+    <% include ../partials/scripts %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/assets/validators.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+</body>
+
+</html>
