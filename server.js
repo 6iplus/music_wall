@@ -13,13 +13,15 @@ var partyId = "party1";
 
 app.get("/party/:partyId", function (req,res) {
     
-    var pid = req.params.partyId;
+    var partyId = req.params.partyId;
     //check if the partyId in partList
     //if not show error
-    
-    
-    
-	res.render('pages/party',{partyId: pid});
+    mySongList.findPartyByPartyID(partyId).then(function(party){
+        console.log(party);
+	    res.render('pages/party',{party: party});
+    }, function(error){
+        console.log(error);
+    });
 });
 
 //socket.io start
