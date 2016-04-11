@@ -10,66 +10,63 @@
     <!-- Bootstrap -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        
+        body { 
+            background: url(http://runxiflute.com/images/IMG_4535.JPG) no-repeat center center fixed; 
+            background-size: cover;
+            background-position: center 0;
+            /*background-attachment: scroll;*/
+            background-color: transparent;
+        }
+    
         div.ex {
-        border:none;
-        margin-top: 230px;
-        margin-bottom: 40px;
-        margin-right: 100px;
-        margin-left: 100px;
+            border:none;
+            margin-top: 230px;
+            margin-bottom: 60px;
+            margin-right: 100px;
+            margin-left: 100px;
         }
     </style>
-
 </head>
-<body>
-    
-<div class="container">
-    <div class="ex">
-        <h1 id="header"></h1>
-    
-    
-    <h2 class="text-center">Welcome to music wall</h2>
-    </div>
-    <!--<p class="ex">adasjdnakjsndkajsndkjanskdjnasd</p>-->
-    <main>
-        <!-- Your main content will go here! -->
-        <section>
-            <!--<h2>My To-Do List API</h2>-->
-            <p class="text-center">Using the music-wall to make your party amazing</p>
-        </section>
-    </main>
-    <div id="background">
-        <img >
-        
-    </div>
-    <div id="createParty">
-        <div class="form-horizontal" action="/createParty" method="GET">
-            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                    <input type='button' id="create" class="btn btn-primary" value="Create Party">
+
+<body>  
+    <div class="container">   
+        <div class="ex">
+            <h1 id="header"></h1>
+            <h2 class="text-center"><font size="9">Welcome to music wall</font></h2>
+            <br/>
+            <p class="text-center"><font size="5">Using the music-wall to make your party amazing</font></p>
+        </div>
+        <div id="createParty">
+            <div class="form-horizontal" action="/createParty" method="GET">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <input type='button' id="create" class="btn btn-primary" value="Create Party" style="font-size:20px">
+                    </div>
                 </div>
-            </div>
-        </div> 
+            </div> 
+        </div>
     </div>
-</div>
 
-<div class="ex">
-<footer class="text-center">
-  <h5>cs546 final project</h5>
-</footer>
-</div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <div class="ex">
+        <footer class="text-center">
+            <h5><font size="6">cs546 final project</font></h5>
+        </footer>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<!-- jQuery fallback -->
-<script>
-    if (!window.jQuery) {
-        document.write('<script src="../assets/js/jquery-1.12.1.js"><\/script>');
-    }
-</script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../assets/js/bootstrap.min.js"></script>
-<script src="../assets/js/underscore-min.js"></script>
-<script src="../assets/js/app.js"></script>
+    <!-- jQuery fallback -->
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="../assets/js/jquery-1.12.1.js"><\/script>');
+        }
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/underscore-min.js"></script>
+    <script src="../assets/js/app.js"></script>
 
 </body>
+
 </html>
