@@ -18,16 +18,16 @@ app.use(cookieParser());
 
 var partyId = "party1";
 
-app.get("/", function (req,res) {
-	res.sendFile("./pages/index.html", {root:__dirname});
-});
-app.get("/partyConfig", function (req,res) {
-	res.sendFile("./pages/partyConfig.html", {root:__dirname});
-});
+// app.get("/", function (req,res) {
+// 	res.sendFile("./pages/index.html", {root:__dirname});
+// });
+// app.get("/partyConfig", function (req,res) {
+// 	res.sendFile("./pages/partyConfig.html", {root:__dirname});
+// });
 
-app.get("/songList", function (req,res) {
-	res.sendFile("./pages/songList.html", {root:__dirname});
-});
+// app.get("/songList", function (req,res) {
+// 	res.sendFile("./pages/songList.html", {root:__dirname});
+// });
 
 
 
@@ -51,6 +51,8 @@ var partyId = "party1";
         console.log(party);
 	    res.render('pages/party',{party: party});
     }, function(error){
+        
+        
         console.log(error);
     });
 });
@@ -191,31 +193,13 @@ app.post("/logout", function (request, response) {
 });
 
 
-
-
-
-
-
-
-
-
-
-app.get("/", function(request, response){
-    if (response.locals.user==undefined) {
-        response.redirect("/login");
-    } 
-  
-    response.render("pages/songList");
-});
-
-
-app.post("/party/:partyId", function(request, response) {
-    //console.log(request.params.partyId);
-   mySongList.addSongbyUrl(request.params.partyId,request.body.Url).then(function() {
-       //console.log(request.body.Url);
-    	response.render("pages/songList", {partyId: request.params.partyId});
-    });
-});
+// app.post("/party/:partyId", function(request, response) {
+//     //console.log(request.params.partyId);
+//    mySongList.addSongbyUrl(request.params.partyId,request.body.Url).then(function() {
+//        //console.log(request.body.Url);
+//     	response.render("pages/songList", {partyId: request.params.partyId});
+//     });
+// });
 app.get("/party/:partyId/playList", function(request, response) {
    
    mySongList.findPartyByPartyID(request.params.partyId).then(function(party) {
@@ -237,14 +221,34 @@ app.get("/party/:partyId/playList", function(request, response) {
    });
 });
 
-app.get("/party/songList/:id", function (req,res) {
-	 mySongList.addSongbyUrl(request.params.partyId,request.body.Url).then(function() {
-    	response.render("pages/songList", {pageTitle: "Song is added."});
-	}, function() {
-		var party = mySongList.findPartyByPartyID(request.params.partyId);
-        console.log(party);
-		response.redirect("pages/songList")
-	});
+// app.get("/party/songList/:id", function (request,response) {
+// 	 mySongList.addSongbyUrl(request.params.partyId,request.body.Url).then(function() {
+//     	response.render("pages/songList", {pageTitle: "Song is added."});
+// 	}, function(error ) {
+// 		var party = mySongList.findPartyByPartyID(request.params.partyId);
+//         console.log(party);
+// 		response.redirect("pages/songList")
+// 	});
+// });
+app.get("/party/addsong/:partyId", function(request, response) {
+   response.render("pages/songList",{partyId: request.params.partyId});
+});
+
+app.post("/party/addsong/:partyId", function(request,response) {
+    //todo zhimeng
+    var partyId = request.params.partyId;
+	var  songName = "new song",
+		 url = request.body.Url,
+		 owner = "sunny";
+	//var result = mySongList.create(partyId,songName,url,owner);
+    
+    io.in(partyId).emit('chat message', "result");
+    mySongList.addSongbyUrl(partyId,url).then(function() {
+       //console.log(request.body.Url);
+    	response.render("pages/songList", {partyId: request.params.partyId});
+    });
+    
+	//request.json(result);
 });
 
 app.post("/party", function(req,res) {
@@ -279,16 +283,22 @@ if(!response.locals.user||response.locals.user==undefined){
 	var createdBy = "unknown user";
 }
 else{
-	var createdBy = response.locals.user.username;
+	var createdBy = response.locals.user; //todo tianchi
 }
-	var playList = {};
+	var playList = [];
 	var config = {};
 	partyData.getPartyById(partyId).then(function(partyList){
 if(partyList.length>0){
-response.render("pages/partyconfig", {Inf: "party id existed"});
+    response.render("pages/partyconfig", {Inf: "party id existed"});
 }else{
-	partyData.createParty(partyId, partyName, createdBy, playList, config);
-	response.render("pages/party/:partyId", {partyId: partyId});
+	partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(thePartyId){
+        
+        response.redirect("/party/"+thePartyId);
+    },function(error){
+        response.send(error);
+    });   
+    
+	
 }
 });
 }
