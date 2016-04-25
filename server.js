@@ -8,6 +8,7 @@ var io = require('socket.io')(http);
 var Guid = require('Guid');
 var cookieParser = require('cookie-parser');
 var partyData = require('./partydata.js');
+var fs = require('fs');
 
 app.set('view engine','ejs');
 app.use(bodyParser.json());
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/assets', express.static('static'));
 app.use(cookieParser());
 
-
+var listener = io.listen(http);
 var partyId = "party1";
 
 // app.get("/", function (req,res) {
@@ -59,17 +60,17 @@ var partyId = "party1";
 
 //socket.io start
 
-io.on('connection', function(socket){
-     socket.on('room', function(room) {
-         socket.join(room);
-         console.log("user joined room: " + room);
-              // now, it's easy to send a message to just the clients in a given room
-         socket.in(room).on('chat message', function(data){
-            console.log(room , data);
-            io.in(room).emit('chat message', data);
-        });
-     });
-  });
+// io.on('connection', function(socket){
+//      socket.on('room', function(room) {
+//          socket.join(room);
+//          console.log("user joined room: " + room);
+//               // now, it's easy to send a message to just the clients in a given room
+//          socket.in(room).on('chat message', function(data){
+//             console.log(room , data);
+//             io.in(room).emit('chat message', data);
+//         });
+//      });
+//   });
 
 //socket.io end
 
@@ -238,16 +239,28 @@ app.post("/party/addsong/:partyId", function(request,response) {
     //todo zhimeng
     var partyId = request.params.partyId;
 	var  songName = "new song",
-		 url = request.body.Url,
-		 owner = "sunny";
+    url = request.body.Url,
+	owner = "sunny";
 	//var result = mySongList.create(partyId,songName,url,owner);
+    // var nsp = io.of('party/addsong/:partyId');
+    // io.in(partyId).emit('chat message', "result");
+    var listener = io.listen(http);
+    listener.sockets.on('connection', function(socket){
+    setInterval(function(){
+        socket.emit('date', {'date': "hello socket"});
+    }, 1000);
+ 
+    });
     
-    io.in(partyId).emit('chat message', "result");
     mySongList.addSongbyUrl(partyId,url).then(function() {
        //console.log(request.body.Url);
     	response.render("pages/songList", {partyId: request.params.partyId});
     });
-    
+   
+    // var listener = io.listen(http);
+    // listener.sockets.on('connection', function(socket){
+    //     socket.in(partyId).emit('chat message', {'partyID': partyId, 'url':url});
+    // });
 	//request.json(result);
 });
 
@@ -259,6 +272,7 @@ app.post("/party", function(req,res) {
 
 //index
 app.get("/", function (req,res) {
+    
 	res.render("pages/index", {Inf: "Welcome!"});
 });
 
@@ -305,8 +319,18 @@ if(partyList.length>0){
 	
 	});
 
-
+// var listener = io.listen(http);
+// listener.sockets.on('connection', function(socket){
+//     setInterval(function(){
+//              socket.emit('date', {'date': "hello socket"});
+//         }, 1000);
+ 
+// });
 
 http.listen(3000, function () {
 	console.log('Your server is now listening on port 3000! Navigate to http://localhost:3000 to access it');
 })
+// var listener = io.listen(http);
+// listener.sockets.on('connection', function(socket){
+//   socket.emit('date', {'date': "hello socket"});
+// });

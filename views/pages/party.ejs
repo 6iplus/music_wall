@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
 	<meta charset="UTF-8">
 	<title><%=party.partyName%></title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+  <script>
+    var socket = io.connect();
+        
+            socket.on('date', function(data){
+            //$('#date').text(data.date);
+
+            console.log(data.date);
+
+            
+            });
+  </script>
 </head>
   <body>
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
