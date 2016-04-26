@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,65 +12,150 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <style>
         div.ex {
-        border:none;
-        margin-top: 230px;
-        margin-bottom: 40px;
-        margin-right: 100px;
-        margin-left: 100px;
+            border: none;
+            margin-top: 230px;
+            margin-bottom: 40px;
+            margin-right: 100px;
+            margin-left: 100px;
         }
     </style>
 
 </head>
+
 <body>
-    
-<div class="container">
-    <div class="ex">
-        <h1 id="header"></h1>
-    
-    
-    <h2 class="text-center">Welcome to music wall</h2>
-    </div>
-    <!--<p class="ex">adasjdnakjsndkajsndkjanskdjnasd</p>-->
-    <main>
-        <!-- Your main content will go here! -->
-        <section>
-            <!--<h2>My To-Do List API</h2>-->
-            <p class="text-center">Using the music-wall to make your party amazing</p>
-        </section>
-    </main>
-    <div id="background">
-        <img >
-        
-    </div>
-    <div id="createParty">
-        <div class="form-horizontal" action="/createParty" method="GET">
-            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                <div class="btn-group" role="group">
-                    <input type='button' id="create" class="btn btn-primary" value="Create Party">
+
+    <div class="container">
+        <div class="ex">
+            <h1 id="header"></h1>
+
+
+            <h2 class="text-center">Welcome to music wall</h2>
+        </div>
+        <!--<p class="ex">adasjdnakjsndkajsndkjanskdjnasd</p>-->
+        <main>
+            <!-- Your main content will go here! -->
+            <section>
+                <!--<h2>My To-Do List API</h2>-->
+                <p class="text-center">Using the music-wall to make your party amazing</p>
+            </section>
+        </main>
+        <div id="background">
+            <img>
+
+        </div>
+        <div id="createParty">
+            <div class="form-horizontal" action="/createParty" method="GET">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <!-- <input type='button' id="create" class="btn btn-primary" value="Create Party"> -->
+
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                            Create Party
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
-</div>
 
-<div class="ex">
-<footer class="text-center">
-  <h5>cs546 final project</h5>
-</footer>
-</div>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<!-- jQuery fallback -->
-<script>
-    if (!window.jQuery) {
-        document.write('<script src="../assets/js/jquery-1.12.1.js"><\/script>');
-    }
-</script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../assets/js/bootstrap.min.js"></script>
-<script src="../assets/js/underscore-min.js"></script>
-<script src="../assets/js/app.js"></script>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <section class="col-lg-offset-5 ">
+                <br>
+                <form class="form-horizontal" role="form" id="form1" action="/login" method="POST">
+                    <div class="row "><h2>Login</h2></div>
+                    <div class="form-group">
+                        <label for="loginname" class="col-lg-3 control-label">Username</label>
+                        <div class="col-lg-3">
+                            <input class="form-control" name='loginname' placeholder="Letter&Number only" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginpw" class="col-lg-3 control-label">Password</label>
+                        <div class="col-lg-3">
+                            <input class="form-control" name='loginpw' placeholder="Letter&Number only" />
+                        </div>
+                    </div>
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <%= error %>
+                        </div>
+                        <% } %>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" class="btn btn-primary" id="button1">Log in</button>
+                                </div>
+                            </div>
+                </form>
+            </section>
+
+            <section class="col-lg-offset-5 ">
+                
+               
+                <form class="form-horizontal" id="form2" action="/register" method="POST">
+                    <h2>New Member? Join us! </h2>
+                    <div class="form-group">
+                        <label for="username" class="col-lg-2 control-label">Username</label>
+                        <div class="col-lg-2">
+                            <input class="form-control" name='username' placeholder="Letter and number only" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-lg-2 control-label">Password</label>
+                        <div class="col-lg-2">
+                            <input class="form-control" name='password' placeholder="Letter and number only" />
+                        </div>
+                    </div>
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <%= error %>
+                        </div>
+                        <% } %>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" class="btn btn-primary" id="button2">Sign up</button>
+                                </div>
+                            </div>
+                </form>
+            </section>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="ex">
+        <footer class="text-center">
+            <h5>cs546 final project</h5>
+        </footer>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- jQuery fallback -->
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="../assets/js/jquery-1.12.1.js"><\/script>');
+        }
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/underscore-min.js"></script>
+    <script src="../assets/js/app.js"></script>
 
 </body>
+
 </html>
