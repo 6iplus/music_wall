@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand">Music Wall</a>
+                    <nav class="collapse navbar bs-navbar-collapse" role="navigation">
+                        <h4 class="nav navbar-nav">CS546</h4>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <main>
+            <!-- Let's start writing content! -->
+            <br><br><br><br><br>
+            <section class="col-lg-offset-5 ">
+                
+                
+                <br>
+                <form class="form-horizontal" role="form" id="form1" action="/login" method="POST">
+                    <div class="row "><h2>Login</h2></div>
+                    <div class="form-group">
+                        <label for="loginname" class="col-lg-3 control-label">Username</label>
+                        <div class="col-lg-3">
+                            <input class="form-control" name='loginname' placeholder="Letter&Number only" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginpw" class="col-lg-3 control-label">Password</label>
+                        <div class="col-lg-3">
+                            <input class="form-control" name='loginpw' placeholder="Letter&Number only" />
+                        </div>
+                    </div>
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <%= error %>
+                        </div>
+                        <% } %>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" class="btn btn-primary" id="button1">Log in</button>
+                                </div>
+                            </div>
+                </form>
+            </section>
+
+            <section class="col-lg-offset-5 ">
+                
+               
+                <form class="form-horizontal" id="form2" action="/register" method="POST">
+                    <h2>New Member? Join us! </h2>
+                    <div class="form-group">
+                        <label for="username" class="col-lg-2 control-label">Username</label>
+                        <div class="col-lg-2">
+                            <input class="form-control" name='username' placeholder="Letter and number only" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-lg-2 control-label">Password</label>
+                        <div class="col-lg-2">
+                            <input class="form-control" name='password' placeholder="Letter and number only" />
+                        </div>
+                    </div>
+                    <% if (error) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Error:</span>
+                            <%= error %>
+                        </div>
+                        <% } %>
+                            <div class="form-group">
+                                <div class="col-lg-offset-2 col-lg-10">
+                                    <button type="submit" class="btn btn-primary" id="button2">Sign up</button>
+                                </div>
+                            </div>
+                </form>
+            </section>
+
+
+
+
+
+
+
+
+
+        </main>
+    </div>
+
+    <% include ../partials/scripts %>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="/assets/validators.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</body>
+
+</html>

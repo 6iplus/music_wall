@@ -62,7 +62,7 @@ MongoClient.connect(fullMongoUrl)
                 newSongList = party.playList;
                 return newSongList;
         	}).then(function(songList){
-                return partyCollection.updateOne({ _id: partyID}, 
+                return partyCollection.updateOne({ partyId: partyID}, 
                     { $set: {playList: songList} }).then(function(){
                         console.log(songList);
                         // return exports.findPartyByPartyID(partyID);
@@ -85,8 +85,7 @@ MongoClient.connect(fullMongoUrl)
     });
 
 
-exports.exports = {
-	get: function (partyId, id) {
+exports.get = function (partyId, id) {
         if(!partyId || !id || data[partyId] == undefined){
             throw Error("error get id :"+ id+ "or partyid:"+ partyId);
         }
@@ -98,11 +97,11 @@ exports.exports = {
 		}
         
         return showError("not found");
-	},
+	}
 
-	create: function (partyId,songName,url,owner) {
+	exports.create = function (partyId,songName,url,owner) {
 		if(!partyId || !songName || !url || !owner){
-            throw Error("one of ur param is null partyId: "+ partyId +"songName:"+songName +"url:"+url+"owner:"+owner);
+            throw Error("one of ur param is null partyId: "+ partyId +" songName:"+songName +" url:"+url+" owner:"+owner);
         } 
             
             var myData = {
@@ -117,9 +116,9 @@ exports.exports = {
             console.log(data);
 			return showSucc(myData);
 		
-	},
+	}
 
-	delete: function (partyId, id) {
+	exports.delete = function (partyId, id) {
         if(!partyId || !id || data[partyId] == undefined){
             throw Error("error get id :"+ id+ "or partyid:"+ partyId);
         }
@@ -133,14 +132,14 @@ exports.exports = {
 		}
         
         return showError("not found");
-	},
-    getAllByPartyId: function(partyId){
-        //todo
+	}
+    exports.getAllByPartyId = function(partyId){
+        //todo zhimeng
         return showSucc(data[partyId]); 
     }
-    ,createParty:function (partyId) {
-        //todo
+    exports.createParty =function (partyId) {
+        //todo zhimeng
         data[partyId] = [];
         return showSucc(partyId);
     }
-}
+
