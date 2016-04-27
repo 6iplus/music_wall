@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans|Averia+Sans+Libre' rel='stylesheet' type='text/css'>-->
+    <title>CS-546 Final Project</title>
+
+    <!-- Bootstrap -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #searchInput,#bulletInput{
+            width: 750px;
+            padding: 0;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            vertical-align: bottom;
+        }
+        
+        input[type=submit] {
+            width: 130px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            
+        }
+        input[type=button] {
+            width: 130px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            
+        }
+        .floating-box1 {
+            border: none;
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin-right: 25px;
+            margin-left: 150px;
+            margin-top: 25px;
+           
+        }
+        .floating-box2 {
+            border: none;
+            float: left;
+            width: 150px;
+            height: 75px;
+            margin: 10px;
+            
+        }
+        .floating-box3 {
+            border: none;
+            float: left;
+            width: 600px;
+            height: 75px;
+            margin: 10px;
+            
+        }
+  
+        @media screen and (max-width: 992px) {
+            #searchInput{
+                width: 450px;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                
+                vertical-align: bottom;
+            }
+            .floating-box1 {
+                border: none;
+                float: left;
+                width: 20px;
+                height: 20px;
+                margin-right: 25px;
+                margin-left: 150px;
+                margin-top: 25px;
+                margin-bottom: 15px;
+            }
+            .floating-box2 {
+                border: none;
+                float: left;
+                width: 150px;
+                height: 75px;
+                margin: 5px;
+                margin-bottom: 15px;
+            }
+            .floating-box3 {
+                border: none;
+                float: left;
+                width: 400px;
+                height: 75px;
+                margin: 5px;
+                margin-bottom: 15px;
+            }   
+        }
+        @media screen and (max-width: 768px) {
+
+            
+            #searchInput{
+                width: 180px;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                
+                vertical-align: bottom;
+            }
+            
+            input[type=submit] {
+                width: 80px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                
+            }
+            
+            input[type=button] {
+                width: 80px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                
+            }
+
+            #bulletInput{
+                width: 250px;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                
+                vertical-align: bottom;
+            }
+            
+            
+            .floating-box1 {
+                border: none;
+                float: left;
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                margin-left: 15px;
+                margin-top: 25px;
+            }
+            .floating-box3 {
+                border: none;
+                float: left;
+                width: 160px;
+                height: 75px;
+                margin: 5px;
+
+                
+            } 
+            .search-description{
+                white-space: nowrap;      
+                overflow: hidden;             
+                text-overflow: ellipsis;
+            }
+
+            .content {
+                height:224px;
+                overflow:auto;
+                background:#fff;
+            }
+        }
+        
+    div.wrapper {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+/*
+
+        .search{
+            display:none;
+        }
+
+        .regular-checkbox:not(checked) ~ .search{
+            display:block;
+        }
+
+        .regular-checkbox:checked ~ .search{
+            display:none;
+        }*/
+    body {
+        padding-top: 30px;
+    }
+        
+        
+    .panel-login {
+        border: none;
+        /*-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+        -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);*/
+    }
+    .panel-login>.panel-heading {
+        color: #00415d;
+        background-color: #fff;
+        border-color: #fff;
+        text-align:center;
+    }
+    .panel-login>.panel-heading a{
+        text-decoration: none;
+        color: #666;
+        font-weight: bold;
+        font-size: 15px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
+    }
+    .panel-login>.panel-heading a.active{
+        color: #029f5b;
+        font-size: 18px;
+    }
+    .panel-login>.panel-heading hr{
+        margin-top: 10px;
+        margin-bottom: 0px;
+        clear: both;
+        border: 0;
+        height: 1px;
+        background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+        background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+        background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+        background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+    }
+    .panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
+        height: 45px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
+    }
+    .panel-login input:hover,
+    .panel-login input:focus {
+        outline:none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-color: #ccc;
+    }
+    .btn-login {
+        background-color: #59B2E0;
+        outline: none;
+        color: #fff;
+        font-size: 10px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #59B2E6;
+    }
+    .btn-login:hover,
+    .btn-login:focus {
+        color: #fff;
+        background-color: #53A3CD;
+        border-color: #53A3CD;
+    }
+    .forgot-password {
+        text-decoration: underline;
+        color: #888;
+    }
+    .forgot-password:hover,
+    .forgot-password:focus {
+        text-decoration: underline;
+        color: #666;
+    }
+
+    .btn-register {
+        background-color: #1CB94E;
+        outline: none;
+        color: #fff;
+        font-size: 10px;
+        height: auto;
+        font-weight: normal;
+        padding: 14px 0;
+        text-transform: uppercase;
+        border-color: #1CB94A;
+    }
+    .btn-register:hover,
+    .btn-register:focus {
+        color: #fff;
+        background-color: #1CA347;
+        border-color: #1CA347;
+    }
+
+    </style>
+</head>
+
+<body>
+ 
+    <div class="wrapper">
+        <div class="col-xs-6;col-sm-4">
+            <div>WELCOME TO MUSIC WALL</div>
+            <div class="col-xs-12;col-sm-6;col-lg-8">
+                <div style="padding-top:40px;font-family: 'Lato', sans-serif;font-size:16px;color:#555555;">
+                Search for your favorite video or enter the name of video you wish to add.
+                </div>
+            </div>
+        </div>
+    </div>        
+        
+   <!--<div class="container">
+    	<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-login">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-6">
+								<a href="#" class="active" id="login-form-link">Login</a>
+							</div>
+							<div class="col-xs-6">
+								<a href="#" id="register-form-link">Register</a>
+							</div>
+						</div>
+						<hr>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-lg-12">
+								<form id="login-form" action="http://phpoll.com/login/process" method="post" role="form" style="display: none;">
+									<div class="form-group">
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+									</div>
+									<div class="form-group">
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+									</div>
+									<div class="form-group text-center">
+										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+										<label for="remember"> Remember Me</label>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3" style="text-align:center">
+												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="text-center">
+													<a href="http://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+								<form id="register-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+									<div class="form-group">
+										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+									</div>
+									<div class="form-group">
+										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+									</div>
+									<div class="form-group">
+										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+									</div>
+									<div class="form-group">
+										<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+									</div>
+									<div class="form-group">
+										<div class="row">
+											<div class="col-sm-6 col-sm-offset-3" style="text-align:center">
+												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register">
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+        
+
+
+       <!--search input-->
+        <div style="text-align:center">
+            <form>
+                <label for="searchInput">
+                    <input type="text" id="searchInput" placeholder="Video name">
+                    
+                    <input type="button" id="searchButton" value="search" >
+                    <input type="submit" id="submitButton" value="submit">
+                    
+                </label>
+            </form>
+        </div>
+    <hr/>
+
+
+
+
+
+
+<!--search results-->
+    <div class="content" style="text-align:center">
+
+    </div>
+
+
+    <hr/>
+    
+
+
+    <footer>     
+        <div class="footer" style="text-align:center">
+            <form>
+                <label for="bulletInput">
+                    <input type="text" id="bulletInput" placeholder="Bullet...">
+                    <input type="submit" id="bulletSubmit" value="submit">
+                </label>
+            </form>
+        </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- jQuery fallback -->
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="../assets/js/jquery-1.12.1.js"><\/script>');
+        }
+        $(function() {
+        //log in
+        // $('#login-form-link').click(function(e) {
+        //     $("#login-form").delay(100).fadeIn(100);
+        //     $("#register-form").fadeOut(100);
+        //     $('#register-form-link').removeClass('active');
+        //     $(this).addClass('active');
+        //     e.preventDefault();
+        // });
+        // $('#register-form-link').click(function(e) {
+        //     $("#register-form").delay(100).fadeIn(100);
+        //     $("#login-form").fadeOut(100);
+        //     $('#login-form-link').removeClass('active');
+        //     $(this).addClass('active');
+        //     e.preventDefault();
+        // });
+        
+            $('#searchButton').click(function() {
+                var searchInput = $('#searchInput').val();
+                console.log(searchInput);
+                $.ajax({
+                    method: "GET",
+                    url: "https://www.googleapis.com/youtube/v3/search?sortorder=descending&search?&orderby=relevance&callback=YoutubeSearch&maxResults=25&part=snippet&q="
+                    +searchInput+"&type=video&key=AIzaSyA-s--TP_Xbc-7Qo55-x9_8uuEkGRS93HU",
+                    dataType: "jsonp",
+                    jsonp: "callback",
+                    jsonpCallback: "YoutubeSearch",
+                    success: function(data) {
+                        if (data.items.length == 0 || data.items.length == undefined) {
+                            alert("Sorry, not found");
+                        }else {
+                            var i=0;
+                            var app = $('.content');
+                            app.empty();
+                            $.each(data.items, function(){
+                                // console.log(data.items.id);
+                                var videoId = data.items[i].id.videoId;
+                                var videoTitle = data.items[i].snippet.title;
+                                var videoDescription = data.items[i].snippet.description;
+                                var videoImage = data.items[i].snippet.thumbnails.default.url;
+                                // console.log(data.items[i].snippet.thumbnails.default.url);
+                                app.append("<div><div class=floating-box1><input type=checkbox id=checkbox-"+i+" class=regular-checkbox/></div>"
+                                +"<label for=checkbox-"+i+"><div class=floating-box2><div class=search-img-inner><img src='"+videoImage+"'></div></div>"
+                                +"<div class=floating-box3><div class=search-wrapper><div class=search-title>"+videoTitle+"</div>"   
+                                +"<div class=search-description>"+videoDescription+"</div></div></div></label></div>");
+                                i++;
+                            })
+                        }
+                    }  
+                })
+            });
+
+    });
+
+
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/underscore-min.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script scr="../assets/js/search.js"></script>
+    <script scr="../assets/js/auth.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+
+</body>
+
+</html>
