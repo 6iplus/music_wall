@@ -229,6 +229,7 @@ var partyId = "";
 
 app.post("/party/addsong/:partyId", function(request,response) {
     //todo zhimeng
+	 var url = 'there is no url';
     var partyId = request.params.partyId;
 
 		  //comment color
@@ -238,12 +239,12 @@ app.post("/party/addsong/:partyId", function(request,response) {
 		  var commentObj = {comment:comment,commentColor:commentColor };
 		  
 		  
-	    if(url!="") io.in(partyId).emit('url', url);
-	    if(comment!="") io.in(partyId).emt('comment', commentObj)
-
-	  
-    url = 'there is no url';
-    io.in(partyId).emit('url', url);
+//	    if(url!="") io.in(partyId).emit('url', url);
+//	    if(comment!="") io.in(partyId).emt('comment', commentObj)
+//
+//	  
+//   
+//	    io.in(partyId).emit('url', url);
 
       mySongList.addSongById(partyId, request.body.videos).then(function() {
     	response.render("pages/songList", {partyId: request.params.partyId});
