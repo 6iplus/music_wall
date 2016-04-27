@@ -40,7 +40,12 @@ var testpid="";
      });
     mySongList.findPartyByPartyID(partyId).then(function(party){
         //console.log(party);
-	    res.render('pages/party',{party: party});
+        var videoIds = [];
+         for(var i=0; i<party.playList.length; i++){
+            videoIds.push("'"+party.playList[i].videoId+"'");
+         }
+         videoIds = '[' +videoIds.join()+']';
+	    res.render('pages/party',{party: party, videoIds: videoIds});
     }, function(error){
         console.log(error);
     });
@@ -180,12 +185,14 @@ app.get("/party/:partyId/playList", function(request, response) {
 
        var songs = [];
        for(var i=0; i<party.playList.length; i++){
-           var url = party.playList[i].url;
-           if( url.indexOf("youtu.be/") != -1){
-            songs.push(url.substr(url.indexOf("youtu.be/")+"youtu.be/".length,11 ));
-           }
-           if(url.indexOf("v=") != -1)
-            songs.push(url.substr(url.indexOf("v=")+2,11 ));
+           
+        //    var url = party.playList[i].url;
+        //    if( url.indexOf("youtu.be/") != -1){
+        //     songs.push(url.substr(url.indexOf("youtu.be/")+"youtu.be/".length,11 ));
+        //    }
+        //    if(url.indexOf("v=") != -1)
+        //url.substr(url.indexOf("v=")+2,11 )
+            songs.push(party.playList[i].videoId);
 
        }}catch(err){
          console.log(err);
