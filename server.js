@@ -101,7 +101,6 @@ app.get("/login", function (request, response) {
 
 });
 app.post("/register", function (request, response) {
-
     myUser.createUser(request.body.username, request.body.password).then(function () {
         response.redirect("/login");
         return true;
@@ -229,14 +228,15 @@ var partyId = "";
  });
 
 app.post("/party/addsong/:partyId", function(request,response) {
+    console.log(request.body);
     //todo zhimeng
     var partyId = request.params.partyId;
-	  var  songName = "new song",
-    url = request.body.Url,
-	  owner = "sunny";
+	  
+    url = 'there is no url';
+	 
     io.in(partyId).emit('url', url);
 
-      mySongList.addSongbyUrl(partyId,url).then(function() {
+      mySongList.addSongById(partyId, request.body.videos).then(function() {
     	response.render("pages/songList", {partyId: request.params.partyId});
     });
 
