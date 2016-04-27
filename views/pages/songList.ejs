@@ -6,43 +6,138 @@
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>Music Wall</h1>
-        </header>
-        <main class="row">
+    <div class="wrapper">
+        <h1>Add video to the music wall</h1>
+        <p>Search for your favorite video or enter the name of video you wish to add.</p>
 
-            <aside class="col-sm-6">
-                <h2>Add Comment</h2>
-                <hr />
-                <form action="/party/addsong/<%=partyId%>" method="POST">
-                    Song Url:<br>
-                    <input type="text" name="Url"><br>
-                    <input type="submit" value="Submit">
-            <section class="col-sm-6">
-                <h2>My Comments</h2>
-            
-            </section>
-            <aside class="col-sm-6">
-                <h2>Add Comment</h2>
-                <hr />
-                <form action="/" method="POST">
-                    <div class="form-group">
-                        <label for="comment">Comment</label>
-                        <textarea class="form-control" name="comment" id="comment" rows="3"></textarea>
-                    </div>
-                   
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-                <form id="form4" action="/logout" method="POST">
-                    <button type="submit" id="button4">logout</button>
-                </form>
-            </aside>
 
-        </main>
+       <!--search input-->
+        <div >
+            <form>
+                <label for="searchInput">
+                    <input type="text" id="searchInput" placeholder="Video name">
+                    
+                    <input type="button" id="searchButton" value="search" >
+                    <input type="button" id="submitButton" value="submit">
+                    
+                </label>
+            </form>
+        </div>
+    <hr/>
+
+
+
+
+
+<!--search results-->
+    <div class="search_results" id="search_results" >
+         <!--<label>
+            <div class="result">
+                <input name="videoId[]" type="checkbox" value="fdsklfjds"/>
+                <img src="https://i.ytimg.com/vi/zxQALXL_vXI/default.jpg" alt="风光"/>
+                <div class="desc">
+                    <span class="title">20160116 姚贝娜 遗作【风光】</span>
+                    <span class="description">四海娱乐，歌手姚贝娜因病去世，在她离开一周年之际，遗作《风光》正式曝光，这首属于她的最后一支歌，悲而不伤、坚毅悠扬，没有华丽的辞藻</span>
+                </div>    
+            </div>
+        </label>-->
     </div>
 
+  </div>   
+    
+
+
+    <footer>     
+        <div class="footer">
+            <form>
+                <label for="bulletInput">
+                    <input type="text" id="bulletInput" placeholder="Bullet...">
+                    <input type="submit" id="bulletSubmit" value="submit">
+                </label>
+            </form>
+        </div>
+    </footer>
+
     <% include ../partials/scripts %>
+    
+    <script>
+                $(function() {
+            
+            
+             $('#submitButton').click(function() {
+                 var checkedBoxes = $(':checked');
+                 if(checkedBoxes.length == 0){
+                     alert('what ghost?');
+                 }
+                 var videos = [];
+                 for(var i=0; i<checkedBoxes.length; i++){
+                     videos.push({title: $(checkedBoxes[i]).data('title'), videoId: checkedBoxes[i].value});
+                 }
+                 
+                
+                console.log(searchInput);
+                $.ajax({
+                    method: "POST",
+                    url: "/party/addsong/<%=partyId%>",
+                    dataType: "jsonp",
+                    data: {videos: videos},
+                    jsonp: "callback",
+                    jsonpCallback: "mycallback",
+                    success: function(data) {
+                       
+                    }  
+                });
+             });
+        
+            $('#searchButton').click(function() {
+                var searchInput = $('#searchInput').val();
+                console.log(searchInput);
+                $.ajax({
+                    method: "GET",
+                    url: "https://www.googleapis.com/youtube/v3/search?sortorder=descending&search?&orderby=relevance&callback=YoutubeSearch&maxResults=25&part=snippet&q="
+                    +searchInput+"&type=video&key=AIzaSyA-s--TP_Xbc-7Qo55-x9_8uuEkGRS93HU",
+                    dataType: "jsonp",
+                    jsonp: "callback",
+                    jsonpCallback: "YoutubeSearch",
+                    success: function(data) {
+                        if (data.items.length == 0 || data.items.length == undefined) {
+                            alert("Sorry, not found");
+                        }else {
+                            var i=0;
+                            var search_results = $('#search_results');
+                            search_results.empty();
+                            $.each(data.items, function(){
+                                // console.log(data.items.id);
+                                var videoId = data.items[i].id.videoId;
+                                var videoTitle = data.items[i].snippet.title;
+                                var videoDescription = data.items[i].snippet.description;
+                                var videoImage = data.items[i].snippet.thumbnails.default.url;
+                                // console.log(data.items[i].snippet.thumbnails.default.url);
+                                var myhtml = '<label>';
+                                    myhtml += '<div class="result">';
+                                    myhtml += '<input name="videoId[]" type="checkbox" data-title="'+ videoTitle +'" value="'+ videoId +'"/>';
+                                    myhtml += '<img src="'+ videoImage +'" alt=""/>';
+                                    myhtml += '<div class="desc">';
+                                    myhtml += '<span class="title">'+ videoTitle +'</span>';
+                                    myhtml += '<span class="description">'+ videoDescription +'</span>'; 
+                                    myhtml += '</div>';
+                                    myhtml += '</div>';
+                                    myhtml += '</label>';                          
+        
+                                search_results.append(myhtml);
+                                i++;
+                                
+                                
+
+                            });
+                        }
+                    }  
+                });
+            });
+
+    });
+    
+    </script>
 </body>
 
 </html>

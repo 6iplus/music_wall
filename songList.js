@@ -71,6 +71,28 @@ MongoClient.connect(fullMongoUrl)
         };
         
         
+         exports.addSongById = function(partyID, videos){
+        
+            var newSongList;
+            return exports.findPartyByPartyID(partyID).then(function(party) {
+                for(var i =0; i<videos.length; i++){
+                    var newSong = {"videoTitle":videos[i].title,
+                                   "videoId":videos[i].videoId,
+                                   "createdBy":"Sunny",
+                                   "watched":false};
+                    party.playList.push(newSong);    
+                }
+                newSongList = party.playList;
+                return newSongList;
+        	}).then(function(songList){
+                return partyCollection.updateOne({ partyId: partyID}, 
+                    { $set: {playList: songList} }).then(function(){
+                        console.log(songList);
+                    }); 
+            });
+        };
+        
+        
         exports.findPartyByPartyID = function(partyId){ 
             return partyCollection.find({partyId: partyId}).limit(1).toArray().then(function(listOfParty) {
         		if(listOfParty.length === 0) {

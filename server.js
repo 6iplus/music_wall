@@ -101,7 +101,6 @@ app.get("/login", function (request, response) {
 
 });
 app.post("/register", function (request, response) {
-
     myUser.createUser(request.body.username, request.body.password).then(function () {
         response.redirect("/login");
         return true;
@@ -231,20 +230,22 @@ var partyId = "";
 app.post("/party/addsong/:partyId", function(request,response) {
     //todo zhimeng
     var partyId = request.params.partyId;
-	  var  songName = "new song",
-    url = request.body.Url,
-	  owner = "sunny";
-	  //comment color
-	  var commentColor = request.body.commentColor;
-	  //comment
-	  var comment = request.body.comment;
-	  var commentObj = {comment:comment,commentColor:commentColor };
+
+		  //comment color
+		  var commentColor = request.body.commentColor;
+		  //comment
+		  var comment = request.body.comment;
+		  var commentObj = {comment:comment,commentColor:commentColor };
+		  
+		  
+	    if(url!="") io.in(partyId).emit('url', url);
+	    if(comment!="") io.in(partyId).emt('comment', commentObj)
+
 	  
-	  
-    if(url!="") io.in(partyId).emit('url', url);
-    if(comment!="") io.in(partyId).emt('comment', commentObj)
-    
-      mySongList.addSongbyUrl(partyId,url).then(function() {
+    url = 'there is no url';
+    io.in(partyId).emit('url', url);
+
+      mySongList.addSongById(partyId, request.body.videos).then(function() {
     	response.render("pages/songList", {partyId: request.params.partyId});
     });
 
