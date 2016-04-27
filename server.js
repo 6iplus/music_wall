@@ -234,8 +234,16 @@ app.post("/party/addsong/:partyId", function(request,response) {
 	  var  songName = "new song",
     url = request.body.Url,
 	  owner = "sunny";
-    io.in(partyId).emit('url', url);
-
+	  //comment color
+	  var commentColor = request.body.commentColor;
+	  //comment
+	  var comment = request.body.comment;
+	  var commentObj = {comment:comment,commentColor:commentColor };
+	  
+	  
+    if(url!="") io.in(partyId).emit('url', url);
+    if(comment!="") io.in(partyId).emt('comment', commentObj)
+    
       mySongList.addSongbyUrl(partyId,url).then(function() {
     	response.render("pages/songList", {partyId: request.params.partyId});
     });
@@ -289,10 +297,10 @@ if(partyList.length>0){
     response.render("pages/partyconfig", {Inf: "party id existed"});
 }else{
 	partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(thePartyId){
-
         response.redirect("/party/"+thePartyId);
+		
     },function(error){
-        response.send(error);
+    	response.render("pages/partyconfig", {Inf: "error happened during the process"});
     });
 
 
@@ -309,6 +317,12 @@ if(partyList.length>0){
 //         }, 1000);
 //
 // });
+
+
+//test route
+
+
+
 
 http.listen(3000, function () {
 	console.log('Your server is now listening on port 3000! Navigate to http://localhost:3000 to access it');
