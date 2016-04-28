@@ -236,7 +236,6 @@ var partyId = "";
 
 app.post("/party/addsong/:partyId", function(request,response) {
     //todo zhimeng
-	    var url = 'there is no url';
       var partyId = request.params.partyId;
 
       var selectedPlayList = request.body.videos;
@@ -250,6 +249,32 @@ app.post("/party/addsong/:partyId", function(request,response) {
       mySongList.addSongById(partyId, request.body.videos).then(function() {
     	response.render("pages/songList", {partyId: request.params.partyId});
     });
+
+    // var listener = io.listen(http);
+    // listener.sockets.on('connection', function(socket){
+    //     socket.in(partyId).emit('chat message', {'partyID': partyId, 'url':url});
+    // });
+	//request.json(result);
+});
+
+
+app.post("/party/addcomment/:partyId", function(request,response) {
+    //todo Tenchi
+
+    var partyId = request.params.partyId;
+
+		  //comment color
+		  var commentColor = request.body.commentColor;
+		  //comment
+		  var comment = request.body.bulletInput;
+
+		  var commentObj = {comment:comment,commentColor:commentColor };
+
+
+	     io.in(partyId).emit('comment', commentObj)
+
+    	response.render("pages/songList", {partyId: request.params.partyId});
+
 
     // var listener = io.listen(http);
     // listener.sockets.on('connection', function(socket){
