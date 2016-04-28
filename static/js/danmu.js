@@ -14,7 +14,7 @@
         if (text == "") {
             return;
         };
-        var _lable = $("<div style='right:20px;top:0px;opacity:1;color:" + getRandomColor(commentColor) + ";'>" + text + "</div>");
+        var _lable = $("<div style='right:20px;top:0px;opacity:1;position: relative;font-size:200%;color:" + getRandomColor(commentColor) + ";z-index: -1;'>" + text + "</div>");
         $(".mask").append(_lable.show());
         init_barrage();
   });
@@ -33,10 +33,10 @@
     function init_barrage() {
         var _top = 0;
         $(".mask div").show().each(function () {
-            var _left = $(window).width()/2 - $(this).width(); //浏览器最大宽度，作为定位left的值
+            var _left = $(window).width()/2; //浏览器最大宽度，作为定位left的值
             var _height = $(window).height(); //浏览器最大高度
-            _top += 10;
-            if (_top >= (_height - 130)) {
+            _top += 50;
+            if (_top >= (_height)) {
                 _top = 0;
             }
             $(this).css({
@@ -45,18 +45,17 @@
                 color: getRandomColor()
             });
             //定时弹出文字
-            var time = 4000;
+            var time = 10000;
             if ($(this).index() % 2 == 0) {
-                time = 6000;
+                time = 9000;
             }
             $(this).animate({
-                left: "-" + _left + "px"
+                left: "-" + $(window).width() + "px"
             }, time, function () {
                 $(this).remove();
             });
         });
     }
-    //获取随机颜色
     function getRandomColor(commentColor) {
         return commentColor;
     }

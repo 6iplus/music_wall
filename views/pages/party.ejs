@@ -6,12 +6,20 @@
 	<script src="//code.jquery.com/jquery-1.12.0.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/assets/js/danmu.js"></script>
-  <!--<link rel="stylesheet" href="/assets/css/style_danmu.css">-->
+
+  <link rel="stylesheet" href="/assets/css/style_danmu.css">
   <style>
-    body{
+     body{
       margin: 0;
       padding: 0;
     }
+  #my_qr{
+   position: absolute;
+    top: 400px;
+    right: 200px;
+  }
+
+
     #playlist{
       background: black;
       color: white;
@@ -35,6 +43,20 @@
   </style>
 </head>
   <body>
+    <a href="#" class="showBarrage">´ò¿ªµ¯Ä»</a>
+<div class="barrage">
+    <div class="screen">
+        <a href="#" class="s_close">¹Ø±Õ×ÖÄ»</a>
+        <div class="mask">
+    <div id="player"></div>
+        </div>
+    </div>
+    <div id="my_qr"></div>
+    
+
+    <input type="hidden" id="partyId" value="<%=party.partyId %>" />
+    <input type="hidden" id="base_url" value="<%=base_url %>" />
+
 
 
     <div id="container" class="container">
@@ -51,6 +73,7 @@
 
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+
 
 
     <script>
@@ -163,5 +186,7 @@
 			//
       // }
   </script>
+  <script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+  <script src="/assets/js/myQrcode.js"></script>
   </body>
 </html>
