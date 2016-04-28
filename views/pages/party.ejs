@@ -6,14 +6,40 @@
 	<script src="//code.jquery.com/jquery-1.12.0.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/assets/js/danmu.js"></script>
+
   <link rel="stylesheet" href="/assets/css/style_danmu.css">
   <style>
- 
+     body{
+      margin: 0;
+      padding: 0;
+    }
   #my_qr{
    position: absolute;
     top: 400px;
     right: 200px;
   }
+
+
+    #playlist{
+      background: black;
+      color: white;
+      width: 10%;
+      float: right;
+      height: 100%;
+    }
+    #theplayer{
+      width: 90%;
+      background:black;
+      float: left;
+      height: 100%;
+    }
+    .container{
+      height: 100%;
+      width:100%;
+      position: relative;
+      overflow: hidden;
+    }
+
   </style>
   <script>
 		var socket = io();
@@ -24,9 +50,6 @@
   </script>
 </head>
   <body>
-<script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
-    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-    
     <a href="#" class="showBarrage">´ò¿ªµ¯Ä»</a>
 <div class="barrage">
     <div class="screen">
@@ -42,11 +65,65 @@
     <input type="hidden" id="base_url" value="<%=base_url %>" />
 
 
-    <script>
 
-       curIndex = 0;
+    <div id="container" class="container">
+          <div id="theplayer">
+            <div id="player"></div>
+          </div>
+          <div id="playlist">
+            <ul>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+            </ul>
+          </div>
+    </div>
+    
+<script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+
+
+
+    <script>
+      function resizeAll(){
+        var myheight = $('#theplayer').css('height');
+        $('#container').css('height', myheight);
+        $('#player').css('height', '100%');
+        $('#player').css('width', '100%');
+      }
+
+     
+
        playList = <%-videoIds%>;// this is an array of video ids
-//"https://www.youtube.com/embed/wtJUaXsgYfU",
+			 var socket = io();
+			 // let's assume that the client page, once rendered, knows what room it wants to join
+			 socket.on('playlist', function(msg){
+					 console.log(msg);
+					//  for(var i=0; i<msg.length; i++){
+					// 	 playList = msg[i];
+					//  }
+					//  console.log(msg+" current length of playlist"+playList.length);
+					var noPreviousVideo = false;
+					if(playList.length == 0){
+						noPreviousVideo	 = true;
+					}
+					for(var i=0; i<msg.length; i++){
+						playList.push( msg[i]);
+					}
+					if(noPreviousVideo) playNextVideo();
+
+
+
+			 });
+			curIndex = 0;
 
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
@@ -74,6 +151,10 @@
       function onPlayerReady(event) {
         event.target.playVideo();
         playNextVideo();
+              $( window ).resize(function() {
+                resizeAll();
+              });
+              resizeAll();
       }
 
       // 5. The API calls this function when the player's state changes.
@@ -99,29 +180,29 @@
           console.log(videoId);
           player.loadVideoById(videoId);
       }
-      
-      var intervalID = window.setInterval(myCallback, 5000);
-      function myCallback() {
-      $.ajax({
-          url: "http://localhost:3000/party/<%=party.partyId%>/playList",
-          jsonp: "callback",
-          dataType: "jsonp",
-          data: {
-              partyId: "",
-              format: "json"
-          },
-          success: function( response ) {
-              //console.log( response.songs ); // server response
-             $.each( response.songs, function( key, val ) {
-                 if(playList.indexOf(val)==-1){
-                     playList.push(val);
-                 }
-                //console.log(playList);
-             });
-          }
-      });
 
-      }
+      // var intervalID = window.setInterval(myCallback, 5000);
+      // function myCallback() {
+      // $.ajax({
+      //     url: "http://localhost:3000/party/<%=party.partyId%>/playList",
+      //     jsonp: "callback",
+      //     dataType: "jsonp",
+      //     data: {
+      //         partyId: "",
+      //         format: "json"
+      //     },
+      //     success: function( response ) {
+      //         //console.log( response.songs ); // server response
+      //        $.each( response.songs, function( key, val ) {
+      //            if(playList.indexOf(val)==-1){
+      //                playList.push(val);
+      //            }
+      //           //console.log(playList);
+      //        });
+      //     }
+      // });
+			//
+      // }
   </script>
   <script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
   <script src="/assets/js/myQrcode.js"></script>
