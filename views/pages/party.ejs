@@ -44,13 +44,6 @@
     }
 
   </style>
-  <script>
-		var socket = io();
-		// let's assume that the client page, once rendered, knows what room it wants to join
-		socket.on('url', function(msg){
-				console.log(msg);
-		});
-  </script>
 </head>
   <body>
 
@@ -65,20 +58,12 @@
           <div id="theplayer">
             <div id="player"></div>
           </div>
+
     
 <div id="playlist">
-            <ul>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
-              <li>first song</li>
+
+			<ul id="playlist_ul">
+
             </ul>
                 
     <div id="my_qr"></div>
@@ -92,44 +77,42 @@
     </div>
     </div>      
     </div>
-    
+
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
 
 
 
     <script>
-      function resizeAll(){
+      	Ífunction resizeAll(){
         var myheight = $('#theplayer').css('height');
         $('#container').css('height', myheight);
         $('#player').css('height', '100%');
         $('#player').css('width', '100%');
       }
+       playList = <%-videoInfos%>;// this is an array of video ids
+			 for(var i =0; i< playList.length; i++){
+				 	$('#playlist_ul').append('<li>'+ playList[i].videoTitle+'</li>');
+			 }
 
-     
-
-       playList = <%-videoIds%>;// this is an array of video ids
 			 var socket = io();
 			 // let's assume that the client page, once rendered, knows what room it wants to join
 			 socket.on('playlist', function(msg){
-					 console.log(msg);
-					//  for(var i=0; i<msg.length; i++){
-					// 	 playList = msg[i];
-					//  }
-					//  console.log(msg+" current length of playlist"+playList.length);
-					var noPreviousVideo = false;
-					if(playList.length == 0){
-						noPreviousVideo	 = true;
-					}
-					for(var i=0; i<msg.length; i++){
-						playList.push( msg[i]);
-					}
+
+			 var comeMessage = msg;
+			 for(var i =0; i< comeMessage.length; i++){
+				 	$('#playlist_ul').append('<li>'+ comeMessage[i].title+'</li>');
+			 }
+			 var noPreviousVideo = false;
+			 if(playList.length == 0){
+					noPreviousVideo	 = true;
+			 }
+			 for(var i=0; i<comeMessage.length; i++){
+					 playList.push( comeMessage[i].videoId);
+			 }
 					if(noPreviousVideo) playNextVideo();
-
-
-
 			 });
-			curIndex = 0;
+			 curIndex = 0;
 
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');

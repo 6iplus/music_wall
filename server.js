@@ -44,11 +44,9 @@ var testpid="";
     mySongList.findPartyByPartyID(partyId).then(function(party){
         //console.log(party);
         var videoIds = [];
-         for(var i=0; i<party.playList.length; i++){
-            videoIds.push("'"+party.playList[i].videoId+"'");
-         }
-         videoIds = '[' +videoIds.join()+']';
-	    res.render('pages/party',{party: party, videoIds: videoIds, base_url:base_url});
+        var playListString = JSON.stringify(party.playList);
+
+	    res.render('pages/party',{party: party, videoInfos: playListString});
     }, function(error){
         console.log(error);
     });
@@ -244,12 +242,11 @@ app.post("/party/addsong/:partyId", function(request,response) {
       var selectedPlayList = request.body.videos;
       var songs = [];
       for(var i=0; i<selectedPlayList.length; i++){
-          //  songs.push(selectedPlayList[i].videoId);
+          //songs.push(selectedPlayList[i].videoId);
           songs.push(selectedPlayList[i]);
       }
-      //console.log("Length of Playlist "+selectedPlayList.length+"\n");
-	    io.in(partyId).emit('playlist', songs);
-      console.log(request.body);
+      //console.log(songs);
+	    io.in(partyId).emit('playlist', selectedPlayList);
       mySongList.addSongById(partyId, request.body.videos).then(function() {
     	response.render("pages/songList", {partyId: request.params.partyId});
     });
