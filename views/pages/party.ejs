@@ -6,7 +6,33 @@
 	<script src="//code.jquery.com/jquery-1.12.0.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/assets/js/danmu.js"></script>
-  <link rel="stylesheet" href="/assets/css/style_danmu.css">
+  <!--<link rel="stylesheet" href="/assets/css/style_danmu.css">-->
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    #playlist{
+      background: black;
+      color: white;
+      width: 10%;
+      float: right;
+      height: 100%;
+    }
+    #theplayer{
+      width: 90%;
+      background:black;
+      float: left;
+      height: 100%;
+    }
+    .container{
+      height: 100%;
+      width:100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+  </style>
   <script>
 		var socket = io();
 		// let's assume that the client page, once rendered, knows what room it wants to join
@@ -16,19 +42,42 @@
   </script>
 </head>
   <body>
+
+
+    <div id="container" class="container">
+          <div id="theplayer">
+            <div id="player"></div>
+          </div>
+          <div id="playlist">
+            <ul>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+              <li>first song</li>
+            </ul>
+          </div>
+    </div>
+    
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
 
-    <a href="#" class="showBarrage"></a>
-<div class="barrage">
-    <div class="screen">
-        <a href="#" class="s_close"></a>
-        <div class="mask">
-            <div id="player"></div>
-        </div>
-    </div>
 
     <script>
+      function resizeAll(){
+        var myheight = $('#theplayer').css('height');
+        $('#container').css('height', myheight);
+        $('#player').css('height', '100%');
+        $('#player').css('width', '100%');
+      }
+
+     
 
        playList = <%-videoIds%>;// this is an array of video ids
 			 var socket = io();
@@ -79,6 +128,10 @@
       function onPlayerReady(event) {
         event.target.playVideo();
         playNextVideo();
+              $( window ).resize(function() {
+                resizeAll();
+              });
+              resizeAll();
       }
 
       // 5. The API calls this function when the player's state changes.
