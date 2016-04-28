@@ -3,7 +3,7 @@
             $(".showBarrage,.s_close").click(function () {
                 $(".barrage,.s_close").toggle("slow");
             });
-            init_animated();
+           // init_animated();
         })
         //提交评论
         

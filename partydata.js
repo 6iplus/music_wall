@@ -16,9 +16,9 @@ return myCollection.find({partyId: partyId}).toArray();
 };
 	
 	exports.createParty = function(partyId, partyName, createdBy, playList, config){
-	return myCollection.insertOne({_id: Guid.create().toString(), partyId: partyId, partyName: partyName, createdBy: createdBy, playList: playList, config: config}).then(function(){
+	return myCollection.insertOne({_id: Guid.create().toString(), partyId: partyId, partyName: partyName, createdBy: createdBy, playList: playList, config: config}).then(function(newParty){
         // todo tianchi
-        return partyId;
+        return newParty.partyId;
     });
 
 }
