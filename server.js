@@ -328,8 +328,8 @@ else{
 if(partyList.length>0){
     response.render("pages/partyconfig", {Inf: "party id existed"});
 }else{
-	partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(thePartyId){
-        response.redirect("/party/"+thePartyId);
+	partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(theParty){
+        response.redirect("/party/"+theParty[0].partyId);
 
     },function(error){
     	response.render("pages/partyconfig", {Inf: "error happened during the process"});

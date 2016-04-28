@@ -14,9 +14,9 @@
       padding: 0;
     }
   #my_qr{
-   position: absolute;
-    top: 400px;
-    right: 200px;
+   position: fixed;
+    bottom: 0px;
+    right: 0px;
   }
 
 
@@ -26,12 +26,15 @@
       width: 10%;
       float: right;
       height: 100%;
+      z-index: 10;
+      position: relative;
     }
     #theplayer{
       width: 90%;
       background:black;
       float: left;
       height: 100%;
+      z-index: -5;
     }
     .container{
       height: 100%;
@@ -50,15 +53,7 @@
   </script>
 </head>
   <body>
-    <a href="#" class="showBarrage">´ò¿ªµ¯Ä»</a>
-<div class="barrage">
-    <div class="screen">
-        <a href="#" class="s_close">¹Ø±Õ×ÖÄ»</a>
-        <div class="mask">
-    <div id="player"></div>
-        </div>
-    </div>
-    <div id="my_qr"></div>
+
     
 
     <input type="hidden" id="partyId" value="<%=party.partyId %>" />
@@ -70,7 +65,8 @@
           <div id="theplayer">
             <div id="player"></div>
           </div>
-          <div id="playlist">
+    
+<div id="playlist">
             <ul>
               <li>first song</li>
               <li>first song</li>
@@ -84,7 +80,17 @@
               <li>first song</li>
               <li>first song</li>
             </ul>
+                
+    <div id="my_qr"></div>
           </div>
+          <!--      <a href="#" class="showBarrage">´ò¿ªµ¯Ä»</a> -->
+<div class="barrage">
+    <div class="screen">
+    <!--    <a href="#" class="s_close">¹Ø±Õ×ÖÄ»</a>  -->
+        <div class="mask">
+        </div>
+    </div>
+    </div>      
     </div>
     
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
