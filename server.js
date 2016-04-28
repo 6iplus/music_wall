@@ -29,7 +29,7 @@ app.use(cookieParser());
 // 	res.sendFile("./pages/songList.html", {root:__dirname});
 // });
 
-var base_url = "155.246.163.50:3000"
+var base_url = "localhost:3000"
 
 var testpid="";
  app.get("/party/:partyId", function (req,res) {
@@ -46,7 +46,7 @@ var testpid="";
         var videoIds = [];
         var playListString = JSON.stringify(party.playList);
 
-	    res.render('pages/party',{party: party, videoInfos: playListString});
+	    res.render('pages/party',{party: party, videoInfos: playListString, base_url: base_url });
     }, function(error){
         console.log(error);
     });
