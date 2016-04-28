@@ -9,6 +9,7 @@ var Guid = require('Guid');
 var cookieParser = require('cookie-parser');
 var partyData = require('./partydata.js');
 var fs = require('fs');
+var xss = require('xss');
 
 app.set('view engine','ejs');
 app.use(bodyParser.json());
@@ -28,6 +29,8 @@ app.use(cookieParser());
 // 	res.sendFile("./pages/songList.html", {root:__dirname});
 // });
 
+var base_url = "155.246.163.50:3000"
+
 var testpid="";
  app.get("/party/:partyId", function (req,res) {
     var partyId = req.params.partyId;
@@ -45,7 +48,7 @@ var testpid="";
             videoIds.push("'"+party.playList[i].videoId+"'");
          }
          videoIds = '[' +videoIds.join()+']';
-	    res.render('pages/party',{party: party, videoIds: videoIds});
+	    res.render('pages/party',{party: party, videoIds: videoIds, base_url:base_url});
     }, function(error){
         console.log(error);
     });
@@ -265,7 +268,7 @@ app.post("/party/addcomment/:partyId", function(request,response) {
 		  //comment color
 		  var commentColor = request.body.commentColor;
 		  //comment
-		  var comment = request.body.bulletInput;
+		  var comment = xss(request.body.bulletInput);
 
 		  var commentObj = {comment:comment,commentColor:commentColor };
 		  

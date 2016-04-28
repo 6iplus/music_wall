@@ -7,6 +7,14 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="/assets/js/danmu.js"></script>
   <link rel="stylesheet" href="/assets/css/style_danmu.css">
+  <style>
+ 
+  #my_qr{
+   position: absolute;
+    top: 400px;
+    right: 200px;
+  }
+  </style>
   <script>
 		var socket = io();
 		// let's assume that the client page, once rendered, knows what room it wants to join
@@ -24,9 +32,15 @@
     <div class="screen">
         <a href="#" class="s_close">¹Ø±Õ×ÖÄ»</a>
         <div class="mask">
-            <div id="player"></div>
+    <div id="player"></div>
         </div>
     </div>
+    <div id="my_qr"></div>
+    
+
+    <input type="hidden" id="partyId" value="<%=party.partyId %>" />
+    <input type="hidden" id="base_url" value="<%=base_url %>" />
+
 
     <script>
 
@@ -109,5 +123,7 @@
 
       }
   </script>
+  <script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+  <script src="/assets/js/myQrcode.js"></script>
   </body>
 </html>
