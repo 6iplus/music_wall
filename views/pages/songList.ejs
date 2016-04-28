@@ -211,12 +211,14 @@
             <form id="bulletComment" action="/party/addcomment/<%=partyId%>" method="POST">
                 <label for="bulletInput">
                     <input type="text" id="bulletInput" name="bulletInput" placeholder="Bullet...">
+
                         <select id="commentColor" name="commentColor">
                               <option value="black">black</option>
                               <option value="red" selected>red</option>
                               <option value="yellow">yellow</option>
                               <option value="purple">purple</option>
                         </select>
+
                     <input type="submit" id="bulletSubmit" value="submit">
                 </label>
             </form>
@@ -229,7 +231,7 @@
         $(function() {
 
              $('#submitButton').click(function() {
-                 var checkedBoxes = $(':checked');
+                 var checkedBoxes = $(".videoId:checked");
                  if(checkedBoxes.length == 0){
                      alert('what ghost?');
                  }
@@ -281,7 +283,7 @@
                                 //console.log(videoId);
                                 var myhtml = '<label>';
                                     myhtml += '<div class="result">';
-                                    myhtml += '<input name="videoId[]" type="checkbox" data-title="'+ videoTitle +'" value="'+ videoId +'"/>';
+                                    myhtml += '<input class="videoId" name="videoId[]" type="checkbox" data-title="'+ videoTitle +'" value="'+ videoId +'"/>';
                                     myhtml += '<img src="'+ videoImage +'" alt=""/>';
                                     myhtml += '<div class="desc">';
                                     myhtml += '<p class="title">'+ videoTitle +'</p>';
