@@ -16,10 +16,10 @@
             <form>
                 <label for="searchInput">
                     <input type="text" id="searchInput" placeholder="Video name">
-                    
+
                     <input type="button" id="searchButton" value="search" >
                     <input type="button" id="submitButton" value="submit">
-                    
+
                 </label>
             </form>
         </div>
@@ -38,16 +38,16 @@
                 <div class="desc">
                     <span class="title">20160116 姚贝娜 遗作【风光】</span>
                     <span class="description">四海娱乐，歌手姚贝娜因病去世，在她离开一周年之际，遗作《风光》正式曝光，这首属于她的最后一支歌，悲而不伤、坚毅悠扬，没有华丽的辞藻</span>
-                </div>    
+                </div>
             </div>
         </label>-->
     </div>
 
-  </div>   
-    
+  </div>
 
 
-    <footer>     
+
+    <footer>
         <div class="footer">
             <form>
                 <label for="bulletInput">
@@ -59,11 +59,11 @@
     </footer>
 
     <% include ../partials/scripts %>
-    
+
     <script>
                 $(function() {
-            
-            
+
+
              $('#submitButton').click(function() {
                  var checkedBoxes = $(':checked');
                  if(checkedBoxes.length == 0){
@@ -73,8 +73,8 @@
                  for(var i=0; i<checkedBoxes.length; i++){
                      videos.push({title: $(checkedBoxes[i]).data('title'), videoId: checkedBoxes[i].value});
                  }
-                 
-                
+
+
                 console.log(searchInput);
                 $.ajax({
                     method: "POST",
@@ -84,11 +84,10 @@
                     jsonp: "callback",
                     jsonpCallback: "mycallback",
                     success: function(data) {
-                       
-                    }  
+                    }
                 });
              });
-        
+
             $('#searchButton').click(function() {
                 var searchInput = $('#searchInput').val();
                 console.log(searchInput);
@@ -119,24 +118,24 @@
                                     myhtml += '<img src="'+ videoImage +'" alt=""/>';
                                     myhtml += '<div class="desc">';
                                     myhtml += '<span class="title">'+ videoTitle +'</span>';
-                                    myhtml += '<span class="description">'+ videoDescription +'</span>'; 
+                                    myhtml += '<span class="description">'+ videoDescription +'</span>';
                                     myhtml += '</div>';
                                     myhtml += '</div>';
-                                    myhtml += '</label>';                          
-        
+                                    myhtml += '</label>';
+
                                 search_results.append(myhtml);
                                 i++;
-                                
-                                
+
+
 
                             });
                         }
-                    }  
+                    }
                 });
             });
 
     });
-    
+
     </script>
 </body>
 

@@ -5,13 +5,6 @@
 	<title><%=party.partyName%></title>
 	<script src="//code.jquery.com/jquery-1.12.0.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-		var socket = io();
-		// let's assume that the client page, once rendered, knows what room it wants to join
-		socket.on('url', function(msg){
-				console.log(msg);
-		});
-  </script>
 </head>
   <body>
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
@@ -20,9 +13,28 @@
 
     <script>
 
-       curIndex = 0;
        playList = <%-videoIds%>;// this is an array of video ids
-//"https://www.youtube.com/embed/wtJUaXsgYfU",
+			 var socket = io();
+			 // let's assume that the client page, once rendered, knows what room it wants to join
+			 socket.on('playlist', function(msg){
+					 console.log(msg);
+					//  for(var i=0; i<msg.length; i++){
+					// 	 playList = msg[i];
+					//  }
+					//  console.log(msg+" current length of playlist"+playList.length);
+					var noPreviousVideo = false;
+					if(playList.length == 0){
+						noPreviousVideo	 = true;
+					}
+					for(var i=0; i<msg.length; i++){
+						playList.push( msg[i]);
+					}
+					if(noPreviousVideo) playNextVideo();
+
+
+
+			 });
+			curIndex = 0;
 
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
@@ -75,29 +87,29 @@
           console.log(videoId);
           player.loadVideoById(videoId);
       }
-      
-      var intervalID = window.setInterval(myCallback, 5000);
-      function myCallback() {
-      $.ajax({
-          url: "http://localhost:3000/party/<%=party.partyId%>/playList",
-          jsonp: "callback",
-          dataType: "jsonp",
-          data: {
-              partyId: "",
-              format: "json"
-          },
-          success: function( response ) {
-              //console.log( response.songs ); // server response
-             $.each( response.songs, function( key, val ) {
-                 if(playList.indexOf(val)==-1){
-                     playList.push(val);
-                 }
-                //console.log(playList);
-             });
-          }
-      });
 
-      }
+      // var intervalID = window.setInterval(myCallback, 5000);
+      // function myCallback() {
+      // $.ajax({
+      //     url: "http://localhost:3000/party/<%=party.partyId%>/playList",
+      //     jsonp: "callback",
+      //     dataType: "jsonp",
+      //     data: {
+      //         partyId: "",
+      //         format: "json"
+      //     },
+      //     success: function( response ) {
+      //         //console.log( response.songs ); // server response
+      //        $.each( response.songs, function( key, val ) {
+      //            if(playList.indexOf(val)==-1){
+      //                playList.push(val);
+      //            }
+      //           //console.log(playList);
+      //        });
+      //     }
+      // });
+			//
+      // }
   </script>
   </body>
 </html>
