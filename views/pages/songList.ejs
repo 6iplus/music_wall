@@ -96,20 +96,19 @@
             }
 
             #searchInput{
-                width: 14em;
-                height: 3em;
-                margin: 1em 0 1em 1em;
-                padding: 0 0 0 0.5em;
-                display: inline-block;
+                width: 220px;
+                height: 40px;
+                margin: 10px 0 15px 10px;
+                padding: 0 0 0 10px;
+                
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 
-                vertical-align: bottom;
             }
             #searchButton, #submitButton, #bulletSubmit{
-                width: 5em;
-                height: 3em;
-                margin: 1em 0 1em 0;
+                width: 65px;
+                height: 40px;
+                margin: 0px 0 15px 0;
                 background-color: #4CAF50;
                 color: white;
                 border: none;
@@ -118,19 +117,17 @@
                 
             }
             #bulletInput{
-                width: 18em;
-                height: 3em;
-                margin: 1em 0 1em 1em;
-                padding: 0 0 0 0.5em;
+                width: 240px;
+                height: 40px;
+                margin: 10px 0 15px 10px;
+                padding: 0 0 0 10px;
                 display: inline-block;
                 border: 1px solid #ccc;
                 border-radius: 4px;
-                box-sizing: border-box;
                 
-                vertical-align: bottom;
             }
             .search_results {
-                height:16em;
+                height:240px;
                 overflow:auto;
                 background:#fff;
             }
@@ -211,15 +208,15 @@
 
     <footer>
         <div class="footer">
-            <form action="/party/addcomment/<%=partyId%>" method="POST">
+            <form id="bulletComment" action="/party/addcomment/<%=partyId%>" method="POST">
                 <label for="bulletInput">
                     <input type="text" id="bulletInput" name="bulletInput" placeholder="Bullet...">
-            <select id="commentColor" name="commentColor">
-  <option value="black">black</option>
-  <option value="red" selected>red</option>
-  <option value="yellow">yellow</option>
-  <option value="purple">purple</option>
-</select>
+                        <select id="commentColor" name="commentColor">
+                              <option value="black">black</option>
+                              <option value="red" selected>red</option>
+                              <option value="yellow">yellow</option>
+                              <option value="purple">purple</option>
+                        </select>
                     <input type="submit" id="bulletSubmit" value="submit">
                 </label>
             </form>
@@ -229,8 +226,7 @@
     <% include ../partials/scripts %>
 
     <script>
-                $(function() {
-
+        $(function() {
 
              $('#submitButton').click(function() {
                  var checkedBoxes = $(':checked');
