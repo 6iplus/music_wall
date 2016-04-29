@@ -35,6 +35,7 @@ var testpid="";
  app.get("/party/:partyId", function (req,res) {
     var partyId = req.params.partyId;
     testpid = partyId;
+    console.log("eeeeeeeeeee");
     //check if the partyId in partList
     //if not show error
     io.on('connection', function(socket){
@@ -46,7 +47,7 @@ var testpid="";
         var videoIds = [];
         var playListString = JSON.stringify(party.playList);
 
-	    res.render('pages/party',{party: party, videoInfos: playListString, base_url: base_url });
+	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_urls});
     }, function(error){
         console.log(error);
     });
@@ -93,10 +94,8 @@ app.use(function (request, response, next) {
 
 
 app.get("/login", function (request, response) {
-    console.log("get/login");
-    console.log(response.locals.user);
     if (response.locals.user) {
-        response.redirect("/");
+        response.redirect("/createparty");
     } else {
         response.render("pages/home", {
             error: null
@@ -108,7 +107,10 @@ app.get("/login", function (request, response) {
 });
 app.post("/register", function (request, response) {
     myUser.createUser(request.body.username, request.body.password).then(function () {
-        response.redirect("/login");
+        //response.redirect("/login");
+        response.render("pages/home", {
+            error: null
+        });
         return true;
         },
         function (errorMessage) {
@@ -116,39 +118,66 @@ app.post("/register", function (request, response) {
                 error: errorMessage
             });
         });
-
-
 });
 
-
+//old
+// app.post("/login", function (request, response) {
+//
+//     try {
+//         console.log("You entered login parts");
+//
+//         myUser.findByUsername(request.body.loginname, request.body.loginpw).then(function (result) {
+//             console.log(result);
+//             if (!result) response.render("pages/home", {
+//                 error: "Password or username not correct"
+//             });
+//
+//             var sessionId = Guid.create().toString();
+//
+//             myUser.addSessionId(request.body.loginname, sessionId).then(function () {
+//                     //  console.log("sessionId", sessionId);
+//                     response.cookie("currentSessionId", sessionId, {});
+//                     response.locals.user = request.cookies.currentSessionId;
+//                     response.redirect("/");
+//                 },
+//                 function (errorMessage) {
+//                     response.status(500).json({
+//                         error: errorMessage
+//                     });
+//                 });
+//
+//         });
+//
+//
+//     } catch (e) {
+//         response.render("pages/home", {
+//             error: e
+//         });f
+//     }
+//
+// });
 app.post("/login", function (request, response) {
-
     try {
         console.log("You entered login parts");
 
         myUser.findByUsername(request.body.loginname, request.body.loginpw).then(function (result) {
-            console.log(result);
-            if (!result) response.render("pages/home", {
-                error: "Password or username not correct"
-            });
-
             var sessionId = Guid.create().toString();
 
             myUser.addSessionId(request.body.loginname, sessionId).then(function () {
-                    //  console.log("sessionId", sessionId);
-                    response.cookie("currentSessionId", sessionId, {});
-                    response.locals.user = request.cookies.currentSessionId;
-                    response.redirect("/");
-                },
-                function (errorMessage) {
-                    response.status(500).json({
-                        error: errorMessage
-                    });
+                //  console.log("sessionId", sessionId);
+                response.cookie("currentSessionId", sessionId, {});
+                response.locals.user = request.cookies.currentSessionId;
+                response.redirect("/createparty");
+            }, function (errorMessage) {
+                response.status(500).json({
+                    error: errorMessage
                 });
-
+            });
+        }, function (errorMessage) {
+            response.status(500).json({
+                error: errorMessage
+            });
         });
-
-
     } catch (e) {
         response.render("pages/home", {
             error: e
@@ -299,7 +328,7 @@ app.get("/", function (req,res) {
 //redirect to partyconfig
 app.get("/createparty", function(request, response){
 	if(!response.locals.user||response.locals.user==undefined){
-	response.render("pages/index", {Inf: "please log in first!"});
+	response.render("pages/home", {error: null});
 }else{
 	response.render("pages/partyconfig", {Inf: "please input your party information"});
 }
@@ -326,6 +355,7 @@ if(partyList.length>0){
     response.render("pages/partyconfig", {Inf: "party id existed"});
 }else{
 	partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(theParty){
+        console.log("eeeeeeeeeeeeee"+theParty[0].partyId);
         response.redirect("/party/"+theParty[0].partyId);
 
     },function(error){

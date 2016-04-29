@@ -21,13 +21,13 @@ MongoClient.connect(fullMongoUrl)
 
             return myCollection.insertOne({ _id: Guid.create().toString(),username: username, encryptedPassword: encryptedPassword, currentSessionId: currentSessionId, profile: profile });
         };
-	
+
 	exports.getUser = function(username) {
             return myCollection.find({username: username}).toArray();
 
 
 	 };
-	
+
 	exports.editProfile = function(username, profile) {
             return myCollection.updateOne({ username: username }, { $set: { profile: profile }});
 
@@ -36,7 +36,7 @@ MongoClient.connect(fullMongoUrl)
 	exports.getUserBySessionId = function(currentSessionId) {
 	return myCollection.find({currentSessionId: currentSessionId}).toArray();
 	 };
-	
+
 	exports.editSessionId = function(username, currentSessionId) {
 	return myCollection.updateOne({ username: username }, { $set: { currentSessionId: currentSessionId }});
 	 };

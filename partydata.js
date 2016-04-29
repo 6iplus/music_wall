@@ -14,23 +14,19 @@ MongoClient.connect(fullMongoUrl)
 	exports.getPartyById = function(partyId){
 return myCollection.find({partyId: partyId}).toArray();
 };
-	
+
 exports.getPartyBy_Id = function(_id){
 	return myCollection.find({_id: _id}).toArray();
 	};
 
 
-	
+
 	exports.createParty = function(partyId, partyName, createdBy, playList, config){
 	return myCollection.insertOne({_id: Guid.create().toString(), partyId: partyId, partyName: partyName, createdBy: createdBy, playList: playList, config: config}).then(function(newParty){
         // todo tianchi
-		console.log("###########");
-		console.log(newParty.insertedId);
         return newParty.insertedId;
-        
+
     }).then(function(partynew){
-    	console.log("***********");
-    	console.log(partynew);
     	return exports.getPartyBy_Id(partynew);
     });
 
