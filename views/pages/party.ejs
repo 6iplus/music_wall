@@ -8,43 +8,7 @@
   <script src="/assets/js/danmu.js"></script>
 
   <link rel="stylesheet" href="/assets/css/style_danmu.css">
-  <style>
-     body{
-      margin: 0;
-      padding: 0;
-			background: black;
-    }
-  #my_qr{
-	    position: fixed;
-			bottom: 0;
-	    right: 0px;
-  }
-
-
-    #playlist{
-      background: black;
-      color: white;
-      width: 13%;
-      float: right;
-      height: 100%;
-      z-index: 10;
-      position: relative;
-    }
-    #theplayer{
-      width: 87%;
-      background:black;
-      float: left;
-      height: 100%;
-      overflow: hidden;
-    }
-    /*.container{
-      height: 100%;
-      width:100%;
-      position: relative;
-      overflow: hidden;
-    }*/
-
-  </style>
+	  <link rel="stylesheet" href="/assets/css/party.css">
 </head>
   <body>
 
@@ -78,15 +42,9 @@
 
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-
-
-
-    <script>
+		<script>
       	function resizeAll(){
 		        var myheight = $('#theplayer').css('height');
-		        // $('#container').css('height', myheight);
-		        // $('#player').css('height', '100%');
-		        // $('#player').css('width', '100%');
 						vph = $(window).height();
 		        vpw = $(window).width();
 		        $('#player').css('height', vph);

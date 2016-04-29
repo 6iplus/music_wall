@@ -1,10 +1,3 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <% include ../partials/head %>
-<style>
         body {
             padding-top: 15px;
          
@@ -82,7 +75,7 @@
             height: 60px;
           
             display: block;
-            margin: 42px 0 0 5px;
+            margin: 80px 0 0 5px;
             float: left;
         }
         .result img {
@@ -212,66 +205,3 @@
             }
 
         }
-    </style>
-</head>
-
-<body>
-    <div class="wrapper">
-        <h1>Add video to the music wall</h1>
-        <p>Search for your favorite video you wish to add.</p>
-
-
-       <!--search input-->
-        <div class="search-input">
-            <form id="searchForm">
-                <label for="searchInput">
-                    <input type="text" id="searchInput" placeholder="Video name">
-
-                    <input type="button" id="searchButton" value="search" >
-                    <input type="button" id="submitButton" value="submit">
-
-                </label>
-            </form>
-        </div>
-    <hr/>
-
-
-
-
-
-<!--search results-->
-    <div class="search_results" id="search_results" >
-    </div>
-
-  </div>
-
-
-
-    <footer>
-        <div class="footer">
-            <form id="bulletComment" action="/party/addcomment/<%=partyId%>" method="POST">
-                <label for="bulletInput">
-                    <input type="text" id="bulletInput" name="bulletInput" placeholder="Bullet...">
-
-                        <select id="commentColor" name="commentColor">
-                              <option value="black">black</option>
-                              <option value="red" selected>red</option>
-                              <option value="yellow">yellow</option>
-                              <option value="purple">purple</option>
-                        </select>
-
-                    <input type="submit" id="bulletSubmit" value="submit">
-                </label>
-            </form>
-        </div>
-    </footer>
-
-    <script type="text/javascript">
-        var partyId ='<%=partyId%>'; 
-    </script>
-    <% include ../partials/scripts %>
-
-    <script src="/assets/js/addVideo.js"></script>
-</body>
-
-</html>

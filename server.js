@@ -18,7 +18,7 @@ app.use('/assets', express.static('static'));
 app.use(cookieParser());
 
 
-var base_url = "localhost:3000"
+var base_url = "155.246.163.64:3000"
 
 var testpid="";
  app.get("/party/:partyId", function (req,res) {
@@ -33,7 +33,7 @@ var testpid="";
         var videoIds = [];
         var playListString = JSON.stringify(party.playList);
 
-	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_urls});
+	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_url});
     }, function(error){
         console.log(error);
     });
@@ -236,16 +236,26 @@ app.get("/createparty", function(request, response){
 //create party
 app.post("/createparty", function(request, response){
 if(!response.locals.user||response.locals.user==undefined){
-	response.render("pages/index", {Inf: "please log in first!"});
+	response.render("pages/home", {Inf: "please log in first!"});
 }else{
 	var partyId = request.body.partyId;
 	var partyName = request.body.partyName;
 	if(!response.locals.user||response.locals.user==undefined){
 	var createdBy = "unknown user";
 }
+if (partyId == "" || partyId == undefined || partyName == "" || partyName == undefined) {
+        response.render("pages/partyconfig", {
+            Inf: "Missing input!"
+        });
+    } else if(!(/([A-Za-z0-9])\w*/g.test(partyId))||!(/([A-Za-z0-9])\w*/g.test(partyName))){
+        response.render("pages/partyconfig", {
+            Inf: "Only allow numbers or letters!"
+        });
+
+    }
 else{
 	var createdBy = response.locals.user; //todo tianchi
-}
+  }
 	var playList = [];
 	var config = {};
 	partyData.getPartyById(partyId).then(function(partyList){

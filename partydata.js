@@ -1,11 +1,12 @@
 var MongoClient = require('mongodb').MongoClient,
+    startup = require('./startup.js'),
     settings = require('./config.js'),
     Guid = require('Guid');
 var bcrypt = require("bcrypt-nodejs");
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};
-
+startup();
 MongoClient.connect(fullMongoUrl)
     .then(function(db) {
         var myCollection = db.collection("party");
