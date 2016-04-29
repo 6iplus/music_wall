@@ -29,13 +29,12 @@ app.use(cookieParser());
 // 	res.sendFile("./pages/songList.html", {root:__dirname});
 // });
 
-var base_url = "localhost:3000"
+var base_url = "155.246.179.105:3000"
 
 var testpid="";
  app.get("/party/:partyId", function (req,res) {
     var partyId = req.params.partyId;
     testpid = partyId;
-    console.log("eeeeeeeeeee");
     //check if the partyId in partList
     //if not show error
     io.on('connection', function(socket){
@@ -43,11 +42,9 @@ var testpid="";
         console.log("user joined party: " + testpid);
      });
     mySongList.findPartyByPartyID(partyId).then(function(party){
-        //console.log(party);
         var videoIds = [];
         var playListString = JSON.stringify(party.playList);
-
-	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_urls});
+	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_url});
     }, function(error){
         console.log(error);
     });
@@ -340,34 +337,32 @@ app.post("/createparty", function(request, response){
 if(!response.locals.user||response.locals.user==undefined){
 	response.render("pages/index", {Inf: "please log in first!"});
 }else{
-	var partyId = request.body.partyId;
-	var partyName = request.body.partyName;
-	if(!response.locals.user||response.locals.user==undefined){
-	var createdBy = "unknown user";
-}
-else{
-	var createdBy = response.locals.user; //todo tianchi
-}
-	var playList = [];
-	var config = {};
-	partyData.getPartyById(partyId).then(function(partyList){
-if(partyList.length>0){
-    response.render("pages/partyconfig", {Inf: "party id existed"});
-}else{
-	partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(theParty){
-        console.log("eeeeeeeeeeeeee"+theParty[0].partyId);
-        response.redirect("/party/"+theParty[0].partyId);
+        var partyId = request.body.partyId;
+        var partyName = request.body.partyName;
+        if(!response.locals.user||response.locals.user==undefined){
+        var createdBy = "unknown user";
+        }else{
+            var createdBy = response.locals.user; //todo tianchi
+        }
+        var playList = [];
+        var config = {};
+        partyData.getPartyById(partyId).then(function(partyList){
+            if(partyList.length>0){
+                response.render("pages/partyconfig", {Inf: "party id existed"});
+            }else{
+                partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(theParty){
+                   console.log("/party/"+theParty[0].partyId);
+                response.redirect("/party/"+theParty[0].partyId);
+            },function(error){
+            console.log(error);
+            response.render("pages/partyconfig", {Inf: "error happened during the process"});
+        });
 
-    },function(error){
-    	response.render("pages/partyconfig", {Inf: "error happened during the process"});
+
+        }
     });
-
-
 }
 });
-}
-
-	});
 
 // var listener = io.listen(http);
 // listener.sockets.on('connection', function(socket){

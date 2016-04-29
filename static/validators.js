@@ -115,7 +115,7 @@
                         }),
                         success: function (msg) {
                             console.log("correct");
-                            $("#form2").submit();
+                            window.location= "/login";
                         },
                         error: function (msg) {
                             console.log(msg);
