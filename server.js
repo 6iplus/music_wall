@@ -28,14 +28,12 @@ var testpid="";
     //if not show error
     io.on('connection', function(socket){
         socket.join(testpid);
-        console.log("user joined party: " + testpid);
      });
     mySongList.findPartyByPartyID(partyId).then(function(party){
-        //console.log(party);
         var videoIds = [];
         var playListString = JSON.stringify(party.playList);
 
-	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_url});
+	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_urls});
     }, function(error){
         console.log(error);
     });
@@ -58,7 +56,6 @@ app.use(function (request, response, next) {
                 console.log("SessionId not found in database");
                 var expiresAt = new Date();
                 expiresAt.setHours(expiresAt.getHours() + 1);
-
                 response.cookie("currentSessionId", "", { expires: expiresAt });
                 response.clearCookie("currentSessionId");
 
