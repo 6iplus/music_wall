@@ -47,7 +47,6 @@ app.use(function (request, response, next) {
 });
 
 app.use(function (request, response, next) {
-
     response.locals.user  = undefined;
     var sessionId = request.cookies.currentSessionId;
     if(sessionId){
