@@ -47,7 +47,7 @@
 </head>
   <body>
 
-    
+
 
     <input type="hidden" id="partyId" value="<%=party.partyId %>" />
     <input type="hidden" id="base_url" value="<%=base_url %>" />
@@ -59,23 +59,22 @@
             <div id="player"></div>
           </div>
 
-    
+
 <div id="playlist">
+			<button type="button" onclick="playNextVideo()">Next Song</button>
+			<ul id="playlist_ul"></ul>
 
-			<ul id="playlist_ul">
 
-            </ul>
-                
     <div id="my_qr"></div>
           </div>
-          <!--      <a href="#" class="showBarrage">´ò¿ªµ¯Ä»</a> -->
+          <!--      <a href="#" class="showBarrage">ï¿½ò¿ªµï¿½Ä»</a> -->
 <div class="barrage">
     <div class="screen">
-    <!--    <a href="#" class="s_close">¹Ø±Õ×ÖÄ»</a>  -->
+    <!--    <a href="#" class="s_close">ï¿½Ø±ï¿½ï¿½ï¿½Ä»</a>  -->
         <div class="mask">
         </div>
     </div>
-    </div>      
+    </div>
     </div>
 
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
@@ -170,28 +169,7 @@
           player.loadVideoById(videoId);
       }
 
-      // var intervalID = window.setInterval(myCallback, 5000);
-      // function myCallback() {
-      // $.ajax({
-      //     url: "http://localhost:3000/party/<%=party.partyId%>/playList",
-      //     jsonp: "callback",
-      //     dataType: "jsonp",
-      //     data: {
-      //         partyId: "",
-      //         format: "json"
-      //     },
-      //     success: function( response ) {
-      //         //console.log( response.songs ); // server response
-      //        $.each( response.songs, function( key, val ) {
-      //            if(playList.indexOf(val)==-1){
-      //                playList.push(val);
-      //            }
-      //           //console.log(playList);
-      //        });
-      //     }
-      // });
-			//
-      // }
+
   </script>
   <script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
   <script src="/assets/js/myQrcode.js"></script>
