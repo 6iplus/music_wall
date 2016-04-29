@@ -18,18 +18,7 @@ app.use('/assets', express.static('static'));
 app.use(cookieParser());
 
 
-// app.get("/", function (req,res) {
-// 	res.sendFile("./pages/index.html", {root:__dirname});
-// });
-// app.get("/partyConfig", function (req,res) {
-// 	res.sendFile("./pages/partyConfig.html", {root:__dirname});
-// });
-
-// app.get("/songList", function (req,res) {
-// 	res.sendFile("./pages/songList.html", {root:__dirname});
-// });
-
-var base_url = "155.246.179.105:3000"
+var base_url = "localhost:3000"
 
 var testpid="";
  app.get("/party/:partyId", function (req,res) {
@@ -42,8 +31,10 @@ var testpid="";
         console.log("user joined party: " + testpid);
      });
     mySongList.findPartyByPartyID(partyId).then(function(party){
+        //console.log(party);
         var videoIds = [];
         var playListString = JSON.stringify(party.playList);
+
 	    res.render('pages/party',{party: party, videoInfos: playListString, base_url:base_url});
     }, function(error){
         console.log(error);
@@ -117,42 +108,6 @@ app.post("/register", function (request, response) {
         });
 });
 
-//old
-// app.post("/login", function (request, response) {
-//
-//     try {
-//         console.log("You entered login parts");
-//
-//         myUser.findByUsername(request.body.loginname, request.body.loginpw).then(function (result) {
-//             console.log(result);
-//             if (!result) response.render("pages/home", {
-//                 error: "Password or username not correct"
-//             });
-//
-//             var sessionId = Guid.create().toString();
-//
-//             myUser.addSessionId(request.body.loginname, sessionId).then(function () {
-//                     //  console.log("sessionId", sessionId);
-//                     response.cookie("currentSessionId", sessionId, {});
-//                     response.locals.user = request.cookies.currentSessionId;
-//                     response.redirect("/");
-//                 },
-//                 function (errorMessage) {
-//                     response.status(500).json({
-//                         error: errorMessage
-//                     });
-//                 });
-//
-//         });
-//
-//
-//     } catch (e) {
-//         response.render("pages/home", {
-//             error: e
-//         });f
-//     }
-//
-// });
 app.post("/login", function (request, response) {
     try {
         console.log("You entered login parts");
@@ -197,14 +152,6 @@ app.post("/logout", function (request, response) {
         });
 });
 
-
-// app.post("/party/:partyId", function(request, response) {
-//     //console.log(request.params.partyId);
-//    mySongList.addSongbyUrl(request.params.partyId,request.body.Url).then(function() {
-//        //console.log(request.body.Url);
-//     	response.render("pages/songList", {partyId: request.params.partyId});
-//     });
-// });
 app.get("/party/:partyId/playList", function(request, response) {
 
    mySongList.findPartyByPartyID(request.params.partyId).then(function(party) {
@@ -212,13 +159,6 @@ app.get("/party/:partyId/playList", function(request, response) {
 
        var songs = [];
        for(var i=0; i<party.playList.length; i++){
-
-        //    var url = party.playList[i].url;
-        //    if( url.indexOf("youtu.be/") != -1){
-        //     songs.push(url.substr(url.indexOf("youtu.be/")+"youtu.be/".length,11 ));
-        //    }
-        //    if(url.indexOf("v=") != -1)
-        //url.substr(url.indexOf("v=")+2,11 )
             songs.push(party.playList[i].videoId);
 
        }}catch(err){
@@ -228,31 +168,8 @@ app.get("/party/:partyId/playList", function(request, response) {
    });
 });
 
-// app.get("/party/songList/:id", function (request,response) {
-// 	 mySongList.addSongbyUrl(request.params.partyId,request.body.Url).then(function() {
-//     	response.render("pages/songList", {pageTitle: "Song is added."});
-// 	}, function(error ) {
-// 		var party = mySongList.findPartyByPartyID(request.params.partyId);
-//         console.log(party);
-// 		response.redirect("pages/songList")
-// 	});
-// });
-// app.get('/send', function(req, res){
-//     io.in('abc123').emit('chat message', 'helloooooooooooo');
-//     res.send('send');
-// });
 
 var partyId = "";
-// io.on('connection', function(socket){
-//     socket.join(partyId);
-//     socket.on('pid', function(partyID) {
-//
-//           partyId = partyID;
-//           console.log("user joined party: " + partyID);
-//           // now, it's easy to send a message to just the clients in a given room
-//         });
-//
-//  });
 
  app.get("/party/addsong/:partyId", function(request, response) {
     partyId = request.params.partyId;
@@ -276,12 +193,6 @@ app.post("/party/addsong/:partyId", function(request,response) {
       mySongList.addSongById(partyId, request.body.videos).then(function() {
     	response.render("pages/songList", {partyId: request.params.partyId});
     });
-
-    // var listener = io.listen(http);
-    // listener.sockets.on('connection', function(socket){
-    //     socket.in(partyId).emit('chat message', {'partyID': partyId, 'url':url});
-    // });
-	//request.json(result);
 });
 
 
@@ -301,13 +212,6 @@ app.post("/party/addcomment/:partyId", function(request,response) {
 	     io.in(partyId).emit('comment', commentObj)
 
     	response.render("pages/songList", {partyId: request.params.partyId});
-
-
-    // var listener = io.listen(http);
-    // listener.sockets.on('connection', function(socket){
-    //     socket.in(partyId).emit('chat message', {'partyID': partyId, 'url':url});
-    // });
-	//request.json(result);
 });
 
 app.post("/party", function(req,res) {
@@ -319,7 +223,7 @@ app.post("/party", function(req,res) {
 //index
 app.get("/", function (req,res) {
 
-	res.render("pages/index", {Inf: "Welcome!"});
+	res.render("pages/home", {error: null});
 });
 
 //redirect to partyconfig
@@ -337,43 +241,33 @@ app.post("/createparty", function(request, response){
 if(!response.locals.user||response.locals.user==undefined){
 	response.render("pages/index", {Inf: "please log in first!"});
 }else{
-        var partyId = request.body.partyId;
-        var partyName = request.body.partyName;
-        if(!response.locals.user||response.locals.user==undefined){
-        var createdBy = "unknown user";
-        }else{
-            var createdBy = response.locals.user; //todo tianchi
-        }
-        var playList = [];
-        var config = {};
-        partyData.getPartyById(partyId).then(function(partyList){
-            if(partyList.length>0){
-                response.render("pages/partyconfig", {Inf: "party id existed"});
-            }else{
-                partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(theParty){
-                   console.log("/party/"+theParty[0].partyId);
-                response.redirect("/party/"+theParty[0].partyId);
-            },function(error){
-            console.log(error);
-            response.render("pages/partyconfig", {Inf: "error happened during the process"});
-        });
+	var partyId = request.body.partyId;
+	var partyName = request.body.partyName;
+	if(!response.locals.user||response.locals.user==undefined){
+	var createdBy = "unknown user";
+}
+else{
+	var createdBy = response.locals.user; //todo tianchi
+}
+	var playList = [];
+	var config = {};
+	partyData.getPartyById(partyId).then(function(partyList){
+if(partyList.length>0){
+    response.render("pages/partyconfig", {Inf: "party id existed"});
+}else{
+	partyData.createParty(partyId, partyName, createdBy, playList, config).then(function(theParty){
+        response.redirect("/party/"+theParty[0].partyId);
 
-
-        }
+    },function(error){
+    	response.render("pages/partyconfig", {Inf: "error happened during the process"});
     });
+
+
 }
 });
+}
 
-// var listener = io.listen(http);
-// listener.sockets.on('connection', function(socket){
-//     setInterval(function(){
-//              socket.emit('date', {'date': "hello socket"});
-//         }, 1000);
-//
-// });
-
-
-//test route
+	});
 
 
 
@@ -381,7 +275,3 @@ if(!response.locals.user||response.locals.user==undefined){
 http.listen(3000, function () {
 	console.log('Your server is now listening on port 3000! Navigate to http://localhost:3000 to access it');
 })
-// var listener = io.listen(http);
-// listener.sockets.on('connection', function(socket){
-//   socket.emit('date', {'date': "hello socket"});
-// });
