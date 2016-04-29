@@ -2,30 +2,20 @@
 <html lang="en">
 
 <head>
-    
+
     <% include ../partials/head %>
     <style>
         body {
-            padding-top: 15px;
-            background-image: url("http://www.planwallpaper.com/static/images/colorful-triangles-background_yB0qTG6.jpg");
-            
+            padding-top: 30px;
         }
-        h1{
+        h1,p{
             font-family: "Lucida Console", Courier, monospace;
-            font-size: 30px;
             text-align: center;
-            letter-spacing: -2px;
-        }
-        p {
-            font-family: "Lucida Console", Courier, monospace;
-            font-size: 15px;
-            text-align: center;
-            letter-spacing: -2px;
         }
         .search-input, .footer{
             text-align: center;
         }
-        
+
         #searchInput{
             width: 600px;
             height: 40px;
@@ -44,96 +34,65 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            
         }
         #bulletInput{
             width: 400px;
             height: 40px;
             margin: 10px 0 15px 10px;
             padding: 0 0 0 10px;
-    
             border: 1px solid #ccc;
             border-radius: 4px;
-           
-         
         }
         hr {
             margin-top: 0;
         }
-        
+
         .search_results {
             text-align: center;
-            height:400px;
+            height:260px;
             overflow:auto;
-            /*background:#fff;*/
-            background-image: inherit;
-        }
-        .forEachResult {
-            margin: 0;
-            height:135px;
-        }
-        .result{
-            width:700px;
-            margin:0;
-            padding: 0;
+            background:#fff;
         }
         .result input {
             border: none;
             width: 60px;
             height: 60px;
-          
+
             display: block;
-            margin: 80px 0 0 5px;
+            margin: 108px 0 0 15px;
             float: left;
         }
         .result img {
             border: none;
             float: left;
-            width: 230px;
-            height: 130px;
-            margin: 10px 28px 5px 28px;
-            
+            width: 280px;
+            height: 200px;
+            margin: 28px;
         }
         .desc {
-            padding-top: 40px;
+            padding-top: 90px;
             border: none;
             float: left;
             width: 260px;
             height: 250px;
             margin-left: 10px;
-
-        } 
+        }
         .description{
-            /*white-space: nowrap;      
-            overflow: hidden;             
-            text-overflow: ellipsis;*/
             color: dimgray;
         }
        @media screen and (max-width: 768px) {
-            body {
-                padding-top: 0;
-                margin-top: 0;
-            }
-            h1{
-                font-family: "Lucida Console", Courier, monospace;
-                font-size: 25px;
-                text-align: center;
-                letter-spacing: -2px;
-            }
             .search-input, .footer, .result{
                 text-align: left;
                 margin:0;
             }
-
             #searchInput{
-                width: 210px;
+                width: 220px;
                 height: 40px;
-                margin: 10px 5px 15px 10px;
+                margin: 10px 0 15px 10px;
                 padding: 0 0 0 10px;
-                
+
                 border: 1px solid #ccc;
                 border-radius: 4px;
-                
             }
             #searchButton, #submitButton, #bulletSubmit{
                 width: 65px;
@@ -144,74 +103,53 @@
                 border: none;
                 border-radius: 4px;
                 cursor: pointer;
-                padding-left: 10px; 
-                
             }
             #bulletInput{
-                width: 190px;
+                width: 240px;
                 height: 40px;
                 margin: 10px 0 15px 10px;
                 padding: 0 0 0 10px;
                 display: inline-block;
                 border: 1px solid #ccc;
                 border-radius: 4px;
-                
             }
             .search_results {
-                margin-top:0;
-                height:330px;
-                overflow-y: auto;
-                overflow-x: hidden;
-                /*background:#fff;*/
-                background-image: inherit;
+                height:240px;
+                overflow:auto;
+                background:#fff;
             }
             .footer {
                 bottom:0;
-                text-align: center;
             }
-            .forEachResult {
-                margin: 0;
-                height:90px;
-                background-image: inherit;
-            } 
             .result {
-                height:90px;
-                overflow-x: hidden;
-                /*background:#fff;*/
+                height:140px;
+                overflow-y:auto;
+                background:#fff;
             }
             .result input {
                 border: none;
                 float: left;
-                width: 20px;
-                height: 20px;
+                width: 25px;
+                height: 25px;
                 margin: 45px 15px 0 15px;
             }
             .result img {
                 border: none;
                 float: left;
-                width: 140px;
-                height: 85px;
+                width: 160px;
+                height: 120px;
                 margin: 0 10px 0 0;
-                
             }
             .desc {
                 border: none;
                 float: left;
-                width: 140px;
+                width: 130px;
                 height: 0;
-                margin-top:-40px;
-
-            } 
-            .title {
-                font-size: 13px;
+                margin-top:-70px;
             }
             .description{
-                /*white-space: nowrap;      
-                overflow: hidden;             
-                text-overflow: ellipsis;*/
                 color: dimgray;
             }
-
         }
     </style>
 </head>
@@ -219,7 +157,7 @@
 <body>
     <div class="wrapper">
         <h1>Add video to the music wall</h1>
-        <p>Search for your favorite video you wish to add.</p>
+        <p>Search for your favorite video or enter the name of video you wish to add.</p>
 
 
        <!--search input-->
@@ -236,17 +174,11 @@
         </div>
     <hr/>
 
-
-
-
-
 <!--search results-->
     <div class="search_results" id="search_results" >
     </div>
 
   </div>
-
-
 
     <footer>
         <div class="footer">
@@ -315,21 +247,18 @@
                             search_results.empty();
                             var videoIds = [];
                             $.each(data.items, function(){
-                                // console.log(data.items.id);
                                 var videoId = data.items[i].id.videoId;
                                 var videoTitle = data.items[i].snippet.title;
                                 var videoDescription = data.items[i].snippet.description;
                                 var videoImage = data.items[i].snippet.thumbnails.default.url;
                                 videoIds.push(videoId);
-                                // console.log(data.items[i].snippet.thumbnails.default.url);
-                                //console.log(videoId);
-                                var myhtml = '<label class="forEachResult">';
+                                var myhtml = '<label>';
                                     myhtml += '<div class="result">';
                                     myhtml += '<input class="videoId" name="videoId[]" type="checkbox" data-title="'+ videoTitle +'" value="'+ videoId +'"/>';
                                     myhtml += '<img src="'+ videoImage +'" alt=""/>';
                                     myhtml += '<div class="desc">';
                                     myhtml += '<p class="title">'+ videoTitle +'</p>';
-                                    myhtml += '<p class="description" id="desc-'+ videoId +'"></p>'; 
+                                    myhtml += '<p class="description" id="desc-'+ videoId +'"></p>';
                                     myhtml += '</div>';
                                     myhtml += '</div>';
                                     myhtml += '</label>';
@@ -337,10 +266,7 @@
                                 search_results.append(myhtml);
                                 i++;
                             });
-                            
-                            
-                            
-                            
+
                              $.ajax({
                                 method: "GET",
                                 url: "https://www.googleapis.com/youtube/v3/videos?id="
@@ -349,29 +275,27 @@
                                 success: function(data){
                                     for( var i=0; i< data.items.length; i++){
                                         var duration = data.items[i].contentDetails.duration;
-                                    
+
                                         var formattedTime = duration.replace("PT","").replace("H",":").replace("M",":").replace("S","");
                                         if(duration.search("S") == -1){
                                             formattedTime = formattedTime+"00";
                                         }
                                         var videoDuration = formattedTime;
-                                    
-                                        // console.log(videoDuration);
                                         var resultDuration = $("#desc-"+data.items[i].id);
                                         resultDuration.append(videoDuration.toString());
-                                        
+
                                     }
-                               
+
                                 }
-  
+
                             });
                         }
                     }
                 });
             });
-            
 
-        
+
+
 
     });
 

@@ -5,37 +5,34 @@
             position: absolute;
             top: 0px;
             right: 0px;
-	border-style: solid;
         }
-        
+
         .barrage .screen .s_close {
-            z-index: 2;
+            /*z-index: 2;
             top: 20px;
             right: 20px;
-            position: absolute;
+            position: absolute;*/
             text-decoration: none;
             width: 40px;
             height: 40px;
-            border-radius: 20px;
             text-align: center;
             color: #000000;
             background: #000;
-            line-height: 40px;
+            /*line-height: 40px;*/
             display: block;
         }
-        
-        .barrage .screen .mask {
 
-        }
-        
+        /*.barrage .screen .mask {
+
+        }*/
+
         .barrage {
             display: block;
             width: 0;
             height: 0;
-	border-style: dashed;
-	z-index: -1;
+	          z-index: -1;
         }
-        
+
         .barrage .screen .mask div {
             position: absolute;
             font-size: 20px;
@@ -47,7 +44,7 @@
 		    color: #000000;
 
         }
-        
+
         .barrage .send {
             z-index: 1;
             width: 100%;
@@ -57,7 +54,7 @@
             bottom: 0px;
             text-align: center;
         }
-        
+
         .barrage .send .s_text {
             width: 600px;
             height: 40px;
@@ -66,11 +63,10 @@
             font-family: "微软雅黑";
 	color: #000000;
         }
-        
+
         .barrage .send .s_btn {
             width: 105px;
             height: 40px;
             background: #22B14C;
             color: #000000;
         }
-   

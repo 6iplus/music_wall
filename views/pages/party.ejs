@@ -12,36 +12,37 @@
      body{
       margin: 0;
       padding: 0;
+			background: black;
     }
   #my_qr{
-   position: fixed;
-    bottom: 0px;
-    right: 0px;
+	    position: fixed;
+			bottom: 0;
+	    right: 0px;
   }
 
 
     #playlist{
       background: black;
       color: white;
-      width: 10%;
+      width: 13%;
       float: right;
       height: 100%;
       z-index: 10;
       position: relative;
     }
     #theplayer{
-      width: 90%;
+      width: 87%;
       background:black;
       float: left;
       height: 100%;
-      z-index: -5;
+      overflow: hidden;
     }
-    .container{
+    /*.container{
       height: 100%;
       width:100%;
       position: relative;
       overflow: hidden;
-    }
+    }*/
 
   </style>
 </head>
@@ -54,28 +55,26 @@
 
 
 
-    <div id="container" class="container">
+    <!-- <div id="container" class="container"> -->
           <div id="theplayer">
             <div id="player"></div>
           </div>
 
 
-<div id="playlist">
-			<button type="button" onclick="playNextVideo()">Next Song</button>
-			<ul id="playlist_ul"></ul>
+				<div id="playlist">
+							<button type="button" onclick="playNextVideo()">Next Song</button>
+							<ul id="playlist_ul"></ul>
 
 
-    <div id="my_qr"></div>
-          </div>
-          <!--      <a href="#" class="showBarrage">�򿪵�Ļ</a> -->
-<div class="barrage">
-    <div class="screen">
-    <!--    <a href="#" class="s_close">�ر���Ļ</a>  -->
-        <div class="mask">
-        </div>
-    </div>
-    </div>
-    </div>
+				    <div id="my_qr"></div>
+				          </div>
+				<div class="barrage">
+				    <div class="screen">
+				        <div class="mask">
+				        </div>
+				    </div>
+				    </div>
+    <!-- </div> -->
 
 <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
@@ -84,11 +83,17 @@
 
     <script>
       	function resizeAll(){
-        var myheight = $('#theplayer').css('height');
-        $('#container').css('height', myheight);
-        $('#player').css('height', '100%');
-        $('#player').css('width', '100%');
-      }
+		        var myheight = $('#theplayer').css('height');
+		        // $('#container').css('height', myheight);
+		        // $('#player').css('height', '100%');
+		        // $('#player').css('width', '100%');
+						vph = $(window).height();
+		        vpw = $(window).width();
+		        $('#player').css('height', vph);
+		        $('#playlist').css('height', vph);
+		        $('#playlist').css('width', 130);
+		        $('#player').css('width', vpw-133);
+      	}
        playList = <%-videoInfos%>;// this is an array of video ids
 			 for(var i =0; i< playList.length; i++){
 				 	$('#playlist_ul').append('<li>'+ playList[i].videoTitle+'</li>');
